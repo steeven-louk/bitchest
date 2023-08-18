@@ -27,6 +27,7 @@
         "tailwindcss": "^3.1.0"
     },
     "dependencies": {
-        "antd": "^5.8.3"
+        "antd": "^5.8.3",
+        "react-router-dom": "^6.15.0"
     }
 }

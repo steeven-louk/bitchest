@@ -5,8 +5,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import { createInertiaApp } from '@inertiajs/inertia-react';
 import { InertiaProgress } from '@inertiajs/progress';
-// import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
+import { BrowserRouter as Router } from 'react-router-dom';
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
 createInertiaApp({
@@ -15,7 +15,11 @@ createInertiaApp({
     resolve: (name) => require(`./Pages/${name}.jsx`),
     
     setup({ el, App, props }) {
-        return render(<App {...props} />, el);
+        return render(
+      <Router>
+        <App {...props} />
+      </Router>  
+        , el);
     },
 });
 
