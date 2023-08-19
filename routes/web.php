@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,4 +29,9 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/user-management', function () {
+    return Inertia::render('admin/UserManagement');
+})->middleware(['auth', 'verified'])->name('management');
+
+// Route::get('/user-management', [AdminController::class, 'index'])->name("management");
 require __DIR__.'/auth.php';

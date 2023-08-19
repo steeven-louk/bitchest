@@ -34,7 +34,7 @@ const DashboardLayout = () => {
                 <li className="nav-item"><a href="" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Wallet</a></li>
                 <li className="nav-item"><a href="" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Profil</a></li>
                 {!isAdmin &&     <li className="nav-item"><Link to="portfolio" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Portfolio</Link></li> }
-            {isAdmin &&    <li className="nav-item"><Link to="user-management" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Manage user</Link></li>}
+            {!isAdmin &&    <li className="nav-item"><Link to="user-management" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Manage user</Link></li>}
                 <li className="nav-item"><a href="" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Setting</a></li>
             </ul>
             <button className='uppercase text-md tracking-tight p-3 text-white font-semibold bg-green-500 hover:bg-red-500 transition hover:ease-in-out duration-300'>Logout</button>
