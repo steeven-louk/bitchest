@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react'
 
 import { Card } from 'antd';
 import axios from 'axios';
+import CryptoChart from '../Components/CryptoCharts/CryptoChart';
 
 const Home = () => {
 
   const [crypto, setCrypto] = useState([]);
-  
+
+
   const getCrypto = async()=>{
     try {
       const data = await axios.get("http://localhost:8000/api/get-currencies");
@@ -25,20 +27,21 @@ getCrypto();
     <>
       <div className="cryptoList flex flex-wrap">
       {crypto?.map((item)=>(
-        <Card className='card bg-slate-500 text-white rounded-md' key={item.id}>
+        <Card className='card bg-slate-500 w-[250px] text-white rounded-md' key={item.id}>
           <div className="header inline-flex gap-3 align-baseline">
             <div className="card-img">
               <img src={`assets/${item.logo}.png`} alt={item.name} />
             </div>
-            <h5 className="name">{item.name} <br /> <span>BTC</span></h5>
+            <h5 className="name capitalize">{item.name} <br /> <span>BTC</span></h5>
           </div>
           <div className="card-bottom flex justify-between">
             <div className="amount">
-              <h4>$52,291</h4>
+              <h4>$ {item.cotation}</h4>
             </div>
 
-            <div className="chart">
-              chart
+            <div className="chart">             
+               <CryptoChart data={crypto}/>
+               
             </div>
           </div>
         </Card>
@@ -105,9 +108,10 @@ getCrypto();
           </div>
 
         </Card>
-        <div className="chart text-center">
-          <h1>CHART JS</h1>
-        </div>
+        <Card className="chart text-center w-[100%]">
+        <CryptoChart data={crypto}/>
+
+        </Card>
       </article>
     </>
   )

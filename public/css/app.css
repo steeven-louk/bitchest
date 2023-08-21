@@ -828,6 +828,12 @@ select {
 .w-\[100\%\] {
   width: 100%;
 }
+.w-\[\] {
+  width: ;
+}
+.w-\[250px\] {
+  width: 250px;
+}
 .max-w-6xl {
   max-width: 72rem;
 }
