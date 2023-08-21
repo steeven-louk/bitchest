@@ -5,7 +5,7 @@ import { Layout, theme } from 'antd';
 import { Link, Outlet } from 'react-router-dom';
 const { Header, Content, Sider } = Layout;
 
-const DashboardLayout = () => {
+const DashboardLayout = ({children}) => {
     const {
         token: { colorBgContainer },
       } = theme.useToken();
@@ -51,7 +51,7 @@ const DashboardLayout = () => {
                 padding: "10px"
               }}
             >
-                <Outlet/>
+                {children}
             </Content>
           </Layout>
         </Layout>

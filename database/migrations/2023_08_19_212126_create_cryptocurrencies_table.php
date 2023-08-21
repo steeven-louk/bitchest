@@ -18,6 +18,7 @@ class CreateCryptocurrenciesTable extends Migration
             $table->string('name');
             // $table->string('devise', 3);
             $table->string('logo', 100)->nullable();
+            $table->float('cotation');
             $table->timestamps();
         });
     }

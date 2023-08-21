@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use App\Models\cryptoCurrencies;
 
 use App\Models\cryptocurrencies;
+use App\Services\CotationServices;
 use Illuminate\Database\Seeder;
 
 class CryptoCurrenciesSeeder extends Seeder
@@ -14,8 +15,11 @@ class CryptoCurrenciesSeeder extends Seeder
      *
      * @return void
      */
+
+
     public function run()
     {
+
         $currency =[
             ["name" => "bitcoin", "logo"=>"bitcoin"],
             ["name" => "cardano", "logo"=>"cardano"],
@@ -30,7 +34,17 @@ class CryptoCurrenciesSeeder extends Seeder
         ];
 
         foreach ($currency as $crypto) {
-           cryptocurrencies::create($crypto);
+
+            $firstCotation = CotationServices::getFirstCotation($crypto['name']); // Utilisez CotationService::getFirstCotation()
+
+
+           cryptocurrencies::create([
+            'name' => $crypto['name'],
+            // 'initials' => $initials,
+            'logo' => $crypto['logo'],
+
+            'cotation' => $firstCotation,
+        ]);
         }
     }
 }
