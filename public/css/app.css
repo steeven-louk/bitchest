@@ -861,6 +861,12 @@ select {
 .shrink-0 {
   flex-shrink: 0;
 }
+.table-auto {
+  table-layout: auto;
+}
+.table-fixed {
+  table-layout: fixed;
+}
 .origin-top {
   transform-origin: top;
 }
@@ -1132,6 +1138,9 @@ select {
 .text-center {
   text-align: center;
 }
+.text-start {
+  text-align: start;
+}
 .align-baseline {
   vertical-align: baseline;
 }
@@ -1268,6 +1277,10 @@ select {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
+.text-red-800 {
+  --tw-text-opacity: 1;
+  color: rgb(153 27 27 / var(--tw-text-opacity));
+}
 .underline {
   text-decoration-line: underline;
 }
@@ -1363,6 +1376,9 @@ select {
 .selection\:text-white::selection {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.hover\:border-collapse:hover {
+  border-collapse: collapse;
 }
 .hover\:border-gray-300:hover {
   --tw-border-opacity: 1;

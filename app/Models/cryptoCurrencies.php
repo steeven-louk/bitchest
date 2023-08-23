@@ -13,4 +13,9 @@ class cryptocurrencies extends Model
         "logo",
         "cotation"
     ];
+
+    public function wallets()
+    {
+        return $this->hasMany(client_wallets::class);
+    }
 }

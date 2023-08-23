@@ -33,5 +33,9 @@ Route::get('/user-management', function () {
     return Inertia::render('admin/UserManagement');
 })->middleware(['auth', 'verified'])->name('management');
 
+Route::get('/portfolio', function () {
+    return Inertia::render('portfolio/Portfolio');
+})->middleware(['auth', 'verified'])->name('portfolio');
+
 // Route::get('/user-management', [AdminController::class, 'index'])->name("management");
 require __DIR__.'/auth.php';

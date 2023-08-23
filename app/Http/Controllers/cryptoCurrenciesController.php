@@ -14,8 +14,8 @@ class CryptoCurrenciesController extends Controller
     {
        try {
         $crypto = cryptocurrencies::all();
-        // dd($crypto);
-       return  Response()->json($crypto, 200);
+
+        return  Response()->json($crypto, 200);
        } catch (Error $error) {
         throw $error;
         return response()->json($error);
