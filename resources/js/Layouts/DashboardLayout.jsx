@@ -5,7 +5,7 @@ import { Layout, theme } from 'antd';
 import { Link, Outlet } from 'react-router-dom';
 const { Header, Content, Sider } = Layout;
 
-const DashboardLayout = ({children}) => {
+const DashboardLayout = () => {
     const {
         token: { colorBgContainer },
       } = theme.useToken();
@@ -13,7 +13,7 @@ const DashboardLayout = ({children}) => {
       const isAdmin = false;
 
       return (
-        <Layout>
+        <Layout className=' overflow-hidden overflow-y-hidden'>
           <Sider
           style={{ height: '100vh', }}
             breakpoint="lg"
@@ -46,12 +46,11 @@ const DashboardLayout = ({children}) => {
             </Header>
              <Content
               style={{
-                margin: '24px 16px 0',
-                overflow: 'initial',
-                padding: "10px"
+                // margin: '24px 16px 0',
+                overflow: 'hidden',
               }}
             >
-                {children}
+                <Outlet/>
             </Content>
           </Layout>
         </Layout>

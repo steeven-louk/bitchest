@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\CotationServiceController;
 use App\Http\Controllers\CryptoCurrenciesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,5 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::get('/api/admin/get-users', [AdminController::class, "index"]);
 Route::apiResource('/admin/get-users', AdminController::class);
 Route::get('/get-currencies', [CryptoCurrenciesController::class, "index"]);
+Route::get('/get-cotation/{cotation}', [CotationServiceController::class, "index"]);
 
 // Route::apiResource('/admin/get-users', AdminController::class);

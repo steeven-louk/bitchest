@@ -2,7 +2,7 @@ import React  from 'react';
 import {Chart as ChartJS} from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
 
-const CryptoChart = ({ data }) => {
+const CryptoChart = ({ data, width }) => {
 
     
     const chartData = {
@@ -18,11 +18,14 @@ const CryptoChart = ({ data }) => {
 
             },
         ],
+        options:{
+            animation: true,
+        }
       
     };
 
    
-    return <><Line data={chartData} /></>;
+    return <><Line data={chartData} className='w-[100%]' /></>;
 
     // const chartRef = useRef();
 

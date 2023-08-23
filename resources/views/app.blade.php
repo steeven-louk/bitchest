@@ -13,7 +13,7 @@
         @routes
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
-        @viteReactRefresh
+
         <script src="{{ mix('js/app.js') }}" defer></script>
         {{-- @vite('resources/js/app.jsx') --}}
 

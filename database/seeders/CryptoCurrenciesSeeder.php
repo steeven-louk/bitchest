@@ -37,7 +37,7 @@ class CryptoCurrenciesSeeder extends Seeder
 
             $firstCotation = CotationServices::getFirstCotation($crypto['name']); // Utilisez CotationService::getFirstCotation()
 
-
+            
            cryptocurrencies::create([
             'name' => $crypto['name'],
             // 'initials' => $initials,

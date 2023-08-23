@@ -14,17 +14,17 @@ export default function Dashboard(props) {
             errors={props.errors}
             // header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
         >
-           {/* <Routes>
+           <Routes>
         <Route path="/" exact element={<DashboardLayout/>}>
             <Route path="dashboard" element={<Home/>} />
             <Route path="portfolio" element={<Portfolio/>} />
             <Route path="user-management" element={<UserManagement/>} />
         </Route>
-    </Routes> */}
-    <DashboardLayout>
+    </Routes>
+    {/* <DashboardLayout>
         <Home />
         <UserManagement/>
-    </DashboardLayout>
+    </DashboardLayout> */}
             
         </Authenticated>
     );
