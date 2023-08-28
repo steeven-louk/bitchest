@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom'
 import Home from './Home';
 import Portfolio from './portfolio/Portfolio';
 import UserManagement from './admin/UserManagement';
+import Cryptos from './cryptocurrencies/Cryptos';
 
 export default function Dashboard(props) {
     return (
@@ -17,6 +18,7 @@ export default function Dashboard(props) {
            <Routes>
         <Route path="/" exact element={<DashboardLayout/>}>
             <Route path="dashboard" element={<Home/>} />
+            <Route path="cryptocurrencies" element={<Cryptos/>} />
             <Route path="portfolio" element={<Portfolio/>} />
             <Route path="user-management" element={<UserManagement/>} />
         </Route>

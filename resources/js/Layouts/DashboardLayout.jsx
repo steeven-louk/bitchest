@@ -33,6 +33,7 @@ const DashboardLayout = () => {
                 <li className="nav-item"><Link to="dashboard" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Dashboard</Link></li>
                 <li className="nav-item"><a href="" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Wallet</a></li>
                 <li className="nav-item"><a href="" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Profil</a></li>
+            {!isAdmin &&    <li className="nav-item"><Link to="cryptocurrencies" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Cryptocurrencies</Link></li>}
                 {!isAdmin &&     <li className="nav-item"><Link to="portfolio" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Portfolio</Link></li> }
             {!isAdmin &&    <li className="nav-item"><Link to="user-management" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Manage user</Link></li>}
                 <li className="nav-item"><a href="" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Setting</a></li>

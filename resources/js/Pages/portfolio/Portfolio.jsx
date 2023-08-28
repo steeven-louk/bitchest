@@ -42,7 +42,7 @@ const Portfolio = () => {
 
     try {
       const response = await axios.post("http://localhost:8000/api/sell-crypto/"+item.id, data);
-      // await item?.filter((items)=>items.id !== item.id);
+
       console.log('data', response);
       await getUserWallets();
     } catch (error) {
