@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { Button, Modal } from 'antd'
+import axios from 'axios';
 
 const Portfolio = () => {
 
@@ -28,10 +29,28 @@ const Portfolio = () => {
 
 
   const sellUserCrypto = async(item)=>{
-    console.log('item',item);
+    const price = item.cryptocurrency.cotation * item.quantity;
+
+    const data ={
+      // id: item.id,
+      crypto_name: item.cryptocurrency.name,
+      logo: item.cryptocurrency.logo,
+      price: price,
+      quantity: item.quantity,
+      cotation: item.cryptocurrency.cotation,
+    };
+
+    try {
+      const response = await axios.post("http://localhost:8000/api/sell-crypto/"+item.id, data);
+      // await item?.filter((items)=>items.id !== item.id);
+      console.log('data', response);
+      await getUserWallets();
+    } catch (error) {
+      console.log('error', error)
+    }
   }
 
-  console.log('userWallet', userWallet)
+  // console.log('userWallet', userWallet)
 
 useEffect(() => {
   getUserWallets();
@@ -43,7 +62,9 @@ useEffect(() => {
   return total + (wallet.quantity * wallet.cryptocurrency.cotation)
  }, 0);
  setTotalPortfolioValue(totalValue);
-}, [userWallet])
+}, [userWallet]);
+
+
 
   return (
     <>
@@ -59,7 +80,7 @@ useEffect(() => {
   </thead>
   <tbody className='text-center'>
     {userWallet?.map((item)=>(
-      <><tr key={item.id}>
+      <><tr key={item?.id}>
         <td>{item.id}</td>
         <td className=' align-middle flex'><img src={`assets/${item.cryptocurrency.logo}.png`} alt={`logo ${item.cryptocurrency.name}`} /> {item.cryptocurrency.name}</td>
         <td className='capitalize'>{item.cryptocurrency.cotation} $</td>

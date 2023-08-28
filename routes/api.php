@@ -27,5 +27,6 @@ Route::apiResource('/admin/get-users', AdminController::class);
 Route::get('/get-currencies', [CryptoCurrenciesController::class, "index"]);
 Route::get('/get-wallets/{id}', [ClientWalletsController::class, "index"]);
 Route::get('/get-cotation/{cotation}', [CotationServiceController::class, "index"]);
+Route::post('/sell-crypto/{id}', [CryptoCurrenciesController::class, "sellCrypto"]);
 
 // Route::apiResource('/admin/get-users', AdminController::class);

@@ -20,7 +20,7 @@ class CreateCryptoHistoriesTable extends Migration
             $table->decimal('price', 10, 2);
             $table->decimal('quantity', 10, 2);
             $table->float('cotation');
-            $table->timestamp('timestamp');
+            // $table->timestamp('timestamp');
             $table->timestamps();
         });
     }
