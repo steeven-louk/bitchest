@@ -49,11 +49,11 @@ console.log("crypto", crypto);
                 <th colSpan={2}>action</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody className='text-center'>
                {crypto?.map((item)=>(
                 <tr key={item.id}>
                     <td scope="row">{item.id}</td>
-                    <td>
+                    <td className='inline-flex align-baseline gap-2'>
                         <img src={`assets/${item.logo}.png`} alt={item.name} className=' object-cover' />
                         {item.name}
                     </td>

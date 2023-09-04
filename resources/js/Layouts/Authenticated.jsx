@@ -1,12 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ApplicationLogo from '../Components/ApplicationLogo';
 import Dropdown from '../Components/Dropdown';
 import NavLink from '../Components/NavLink';
 import ResponsiveNavLink from '../Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/inertia-react';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserData } from '../redux/userSlice';
 
 export default function Authenticated({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+    const email = useSelector(state => state.userInfo?.email);
+    const dispatch = useDispatch();
+    useEffect(() => {
+       async function getUserData(){
+        const data = await axios.get("http://localhost:8000/api/get-user/"+ email);
+        if(data.status === 200){
+            dispatch(setUserData({
+            'id': data.data.id,
+            'name': data.data.name,
+            'status': data.data.status
+        }));
+        }
+        console.log('from',data)
+       };
+       getUserData()
+    }, []);
 
     return (
         <div className="min-h-screen bg-gray-100">

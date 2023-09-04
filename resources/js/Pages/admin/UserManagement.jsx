@@ -15,83 +15,12 @@ const UserManagement = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
-  // const columns = [
-  //   {
-  //     title: 'Name',
-  //     dataIndex: 'name',
-  //     key: 'name',
-  //     render: (text) => <a>{text}</a>,
-  //   },
-  //   {
-  //     title: 'Age',
-  //     dataIndex: 'age',
-  //     key: 'age',
-  //   },
-  //   {
-  //     title: 'Address',
-  //     dataIndex: 'address',
-  //     key: 'address',
-  //   },
-  //   {
-  //     title: 'Tags',
-  //     key: 'tags',
-  //     dataIndex: 'tags',
-  //     render: (_, { tags }) => (
-  //       <>
-  //         {tags.map((tag) => {
-  //           let color = tag.length > 5 ? 'geekblue' : 'green';
-  //           if (tag === 'loser') {
-  //             color = 'volcano';
-  //           }
-  //           return (
-  //             <Tag color={color} key={tag}>
-  //               {tag.toUpperCase()}
-  //             </Tag>
-  //           );
-  //         })}
-  //       </>
-  //     ),
-  //   },
-  //   {
-  //     title: 'Action',
-  //     key: 'action',
-  //     render: (_, record) => (
-  //       <Space size="middle">
-  //         <a> <Switch checkedChildren="user" unCheckedChildren="admin" defaultChecked className='bg-gray-800'/></a>
-  //         <a className='text-[#ff0000]'>Delete</a>
-  //       </Space>
-  //     ),
-  //   },
-  // ];
-  // const data = [
-  //   {
-  //     key: getUser.id,
-  //     name: getUser.name,
-  //     age: 32,
-  //     address: 'New York No. 1 Lake Park',
-  //     tags: ['nice', 'developer'],
-  //   },
-  //   {
-  //     key: '2',
-  //     name: 'Jim Green',
-  //     age: 42,
-  //     address: 'London No. 1 Lake Park',
-  //     tags: ['loser'],
-  //   },
-  //   {
-  //     key: '3',
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     address: 'Sydney No. 1 Lake Park',
-  //     tags: ['cool', 'teacher'],
-  //   },
-  // ];
 
   const getUsers= async ()=>{
     try {
       const data = await axios.get("http://localhost:8000/api/admin/get-users");
       if(data.status == 200) setGetUser(data.data);
-      console.log('use',data)
+
     } catch (error) {
       console.log(error)
     }
@@ -160,8 +89,8 @@ const [form] = Form.useForm();
         }
       : null;
 
-console.log(role)
-return (
+
+      return (
     <>
       <Header className='text-white'>
         <Title level={3} type='success' className=" uppercase font-semibold my-auto block">user management</Title> 

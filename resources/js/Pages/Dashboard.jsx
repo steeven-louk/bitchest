@@ -16,8 +16,8 @@ export default function Dashboard(props) {
             // header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
         >
            <Routes>
-        <Route path="/" exact element={<DashboardLayout/>}>
-            <Route path="dashboard" element={<Home/>} />
+        <Route path="/" element={<DashboardLayout/>}>
+            <Route exact path="dashboard" element={<Home/>} />
             <Route path="cryptocurrencies" element={<Cryptos/>} />
             <Route path="portfolio" element={<Portfolio/>} />
             <Route path="user-management" element={<UserManagement/>} />

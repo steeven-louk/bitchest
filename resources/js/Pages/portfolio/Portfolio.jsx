@@ -1,7 +1,8 @@
 
 import React, { useEffect, useState } from 'react'
-import { Button, Modal } from 'antd'
+// import { Button } from 'antd'
 import axios from 'axios';
+import { ModalComponent } from '../../Components/Modal/Modal';
 
 const Portfolio = () => {
 
@@ -71,18 +72,18 @@ useEffect(() => {
       <table className="table w-[100%] hover:border-collapse">
   <thead>
     <tr>
-      <th>id</th>
+      <th>#</th>
       <th>name</th>
       <th>cotation</th>
       <th>quantity</th>
-      <th>action </th>
+      <th>action</th>
     </tr>
   </thead>
   <tbody className='text-center'>
-    {userWallet?.map((item)=>(
+    {userWallet?.map((item, index)=>(
       <><tr key={item?.id}>
-        <td>{item.id}</td>
-        <td className=' align-middle flex'><img src={`assets/${item.cryptocurrency.logo}.png`} alt={`logo ${item.cryptocurrency.name}`} /> {item.cryptocurrency.name}</td>
+        <td>{index +1}</td>
+        <td className=' align-baseline inline-flex gap-3'><img src={`assets/${item.cryptocurrency.logo}.png`} alt={`logo ${item.cryptocurrency.name}`} /> {item.cryptocurrency.name}</td>
         <td className='capitalize'>{item.cryptocurrency.cotation} $</td>
         <td className='font-semibold'>{item.quantity}</td>
         <td>
@@ -90,7 +91,7 @@ useEffect(() => {
           <span onClick={showModal} className='text-red-800 font-semibold cursor-pointer'>view</span>
         </td>
       </tr><div>
-          <Modal
+          {/* <Modal
             open={openModal}
             title="update user"
             onCancel={handleCancel}
@@ -101,7 +102,9 @@ useEffect(() => {
             ]}
           >
             <span>test</span>
-          </Modal>
+          </Modal> */}
+
+          <ModalComponent openModal={openModal} handleCancel={handleCancel} title="update user 5" btnText="sell" />
         </div></>
     ))}
     <span className='font-bold'>{totalPortfolioValue} $</span>

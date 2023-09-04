@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ClientWalletsController;
 use App\Http\Controllers\CotationServiceController;
 use App\Http\Controllers\CryptoCurrenciesController;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    
     return $request->user();
 });
 
@@ -29,5 +31,9 @@ Route::get('/get-wallets/{id}', [ClientWalletsController::class, "index"]);
 Route::get('/get-cotation/{cotation}', [CotationServiceController::class, "index"]);
 Route::post('/sell-crypto/{id}', [CryptoCurrenciesController::class, "sellCrypto"]);
 Route::post('/payer-crypto', [CryptoCurrenciesController::class, "buyCrypto"]);
+
+
+Route::get('/get-crypto/{id}', [CryptoCurrenciesController::class, "showCrypto"]);
+Route::get('/get-user/{email}', [AuthenticatedSessionController::class, "show"]);
 
 // Route::apiResource('/admin/get-users', AdminController::class);

@@ -1,5 +1,5 @@
 import React  from 'react';
-import {Chart as ChartJS} from 'chart.js/auto';
+import { Chart as ChartJS} from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
 
 const CryptoChart = ({ data, width }) => {
@@ -9,11 +9,11 @@ const CryptoChart = ({ data, width }) => {
         labels: data.map((item)=>item.name),
         datasets: [
             {
-                label: 'Cotation',
+                label:'Cotation',
                 data: data.map((item)=>item.cotation),
                 borderColor: 'blue',
                 backgroundColor: ['green','blue','red',"yellow"],
-                fill: false,
+                fill: true,
                 tension: 0.1
 
             },
@@ -25,6 +25,7 @@ const CryptoChart = ({ data, width }) => {
     };
 
    
+    // return <><BarElement data={chartData} className='w-[100%]' /></>;
     return <><Line data={chartData} className='w-[100%]' /></>;
 
     // const chartRef = useRef();

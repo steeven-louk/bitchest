@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Error;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +40,24 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         return redirect()->intended(RouteServiceProvider::HOME);
+    }
+
+
+
+       /**
+     * Show an authenticated session.
+     *
+     * @param   $Email
+     */
+    public function show($email)
+    {
+        try {
+            $getUser = User::where('email', $email)->first();
+            if(!$getUser) return response()->json(['message'=> "user not fount"], 404);
+            return response()->json($getUser, 200);
+        } catch (Error $error) {
+            return response()->json($error, 500);
+        }
     }
 
     /**

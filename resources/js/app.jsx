@@ -7,6 +7,8 @@ import { createInertiaApp } from '@inertiajs/inertia-react';
 import { InertiaProgress } from '@inertiajs/progress';
 
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
 createInertiaApp({
@@ -16,9 +18,12 @@ createInertiaApp({
     
     setup({ el, App, props }) {
         return render(
+          <Provider store={store}>
+
       <Router>
         <App {...props} />
       </Router>  
+          </Provider>
         , el);
     },
 });
