@@ -74,12 +74,31 @@ class AdminController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $get_user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $get_user)
     {
         //
+        $request->validate([
+            'name'=> 'required',
+            'email'=>'required',
+            'status'=>'required'
+        ]);
+        try {
+            $user = User::findOrFail($get_user);
+            if(!$user) return response()->json(['message'=>"user not found"], 404);
+
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            $user->status = $request->input('status');
+            $user->save();
+
+            return response()->json(['message' => 'user has been updated successfully']);
+    
+        } catch (\Exception $e) {
+        return response()->json(['message' => 'Updated Error', 'error' => $e->getMessage()], 500);
+    }
     }
 
     /**

@@ -7,7 +7,8 @@ import Home from './Home';
 import Portfolio from './portfolio/Portfolio';
 import UserManagement from './admin/UserManagement';
 import Cryptos from './cryptocurrencies/Cryptos';
-
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 export default function Dashboard(props) {
     return (
         <Authenticated
@@ -27,7 +28,7 @@ export default function Dashboard(props) {
         <Home />
         <UserManagement/>
     </DashboardLayout> */}
-            
+            <ToastContainer />
         </Authenticated>
     );
 }

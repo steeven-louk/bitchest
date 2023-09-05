@@ -3,20 +3,29 @@ import React, { useEffect, useState } from 'react'
 // import { Button } from 'antd'
 import axios from 'axios';
 import { ModalComponent } from '../../Components/Modal/Modal';
+import { useDispatch } from 'react-redux';
+import { userAmount } from '../../redux/userSlice';
 
 const Portfolio = () => {
 
   const [userWallet, setUserWallet] = useState([]);
   const [totalPortfolioValue, setTotalPortfolioValue] = useState();
+  const [cryptoData, setCryptoData] = useState({});
   const [openModal, setOpenModal] = useState(false);
   
-  const showModal = () => {
+  
+  const showModal = (item) => {
     setOpenModal(true);
+    setCryptoData(item);
+    console.log('itemModal', item)
   };
   const handleCancel = () => {
     setOpenModal(false);
+    setCryptoData(null);
   };
   const id = 2;
+
+  console.log('cryptollll', cryptoData)
 
   const getUserWallets = async()=>{
     try {
@@ -52,7 +61,7 @@ const Portfolio = () => {
   }
 
   // console.log('userWallet', userWallet)
-
+const dispatch = useDispatch();
 useEffect(() => {
   getUserWallets();
 }, [id]);
@@ -62,6 +71,7 @@ useEffect(() => {
  const totalValue = userWallet.reduce((total, wallet)=>{
   return total + (wallet.quantity * wallet.cryptocurrency.cotation)
  }, 0);
+ dispatch(userAmount(totalValue));
  setTotalPortfolioValue(totalValue);
 }, [userWallet]);
 
@@ -88,7 +98,7 @@ useEffect(() => {
         <td className='font-semibold'>{item.quantity}</td>
         <td>
           <span onClick={()=>sellUserCrypto(item)} className='text-red-800 font-semibold cursor-pointer'>sell</span>
-          <span onClick={showModal} className='text-red-800 font-semibold cursor-pointer'>view</span>
+          <span onClick={()=>showModal(item)} className='text-red-800 font-semibold cursor-pointer'>view</span>
         </td>
       </tr><div>
           {/* <Modal
@@ -104,7 +114,7 @@ useEffect(() => {
             <span>test</span>
           </Modal> */}
 
-          <ModalComponent openModal={openModal} handleCancel={handleCancel} title="update user 5" btnText="sell" />
+          <ModalComponent openModal={openModal} handleCancel={handleCancel} crypto={cryptoData} btnText="sell" />
         </div></>
     ))}
     <span className='font-bold'>{totalPortfolioValue} $</span>

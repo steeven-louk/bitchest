@@ -1,6 +1,6 @@
 import React  from 'react';
 import { Chart as ChartJS} from 'chart.js/auto';
-import { Line } from 'react-chartjs-2';
+import { Bar, Line } from 'react-chartjs-2';
 
 const CryptoChart = ({ data, width }) => {
 
@@ -12,9 +12,9 @@ const CryptoChart = ({ data, width }) => {
                 label:'Cotation',
                 data: data.map((item)=>item.cotation),
                 borderColor: 'blue',
-                backgroundColor: ['green','blue','red',"yellow"],
-                fill: true,
-                tension: 0.1
+                backgroundColor: ['orange','blue','grey',"blue","black","green"],
+                fill: false,
+                // tension: 0.1
 
             },
         ],
@@ -26,7 +26,7 @@ const CryptoChart = ({ data, width }) => {
 
    
     // return <><BarElement data={chartData} className='w-[100%]' /></>;
-    return <><Line data={chartData} className='w-[100%]' /></>;
+    return <Bar data={chartData} />;
 
     // const chartRef = useRef();
 

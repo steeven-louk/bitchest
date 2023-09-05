@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Route::get('/api/admin/get-users', [AdminController::class, "index"]);
 Route::apiResource('/admin/get-users', AdminController::class);
+Route::apiResource('/admin/update-user', AdminController::class);
 Route::get('/get-currencies', [CryptoCurrenciesController::class, "index"]);
 Route::get('/get-wallets/{id}', [ClientWalletsController::class, "index"]);
 Route::get('/get-cotation/{cotation}', [CotationServiceController::class, "index"]);

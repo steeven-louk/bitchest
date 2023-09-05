@@ -15,7 +15,8 @@ const DashboardLayout = () => {
       const isAdmin = false;
 
      const name = useSelector(state => state.user.userInfo.userData.name);
-
+     const wallets = useSelector(state => state.user.wallets);
+console.log('aaaaaaaa',wallets)
      return (
         <Layout className=' overflow-hidden overflow-y-hidden'>
           <Sider
@@ -41,11 +42,13 @@ const DashboardLayout = () => {
             {!isAdmin &&    <li className="nav-item"><Link to="cryptocurrencies" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Cryptocurrencies</Link></li>}
                 {!isAdmin &&     <li className="nav-item"><Link to="portfolio" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Portfolio</Link></li> }
             {!isAdmin &&    <li className="nav-item"><Link to="user-management" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Manage user</Link></li>}
-                <li className="nav-item"><a href="" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Setting</a></li>
             </ul>
+            <div className="btn-group flex flex-col">
+            <span className='text-white text-xl shadow-green-500 shadow-sm text-center mb-3 font-bold uppercase'>solde : {wallets}$</span>
             <button className='uppercase text-md tracking-tight p-3 text-white font-semibold bg-green-500 hover:bg-red-500 transition hover:ease-in-out duration-300'>
               <Link to={"logout"}>Logout</Link>
             </button>
+            </div>
            </div>
           </Sider>
 

@@ -13,7 +13,7 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers:{
-        getUserAmount:(state, action)=>{
+        userAmount:(state, action)=>{
             state.wallets = action.payload
         },
         setUserEmail:(state, action)=>{
@@ -27,5 +27,5 @@ export const userSlice = createSlice({
     }
 })
 
-export const {getUserAmount, setUserEmail, setUserData} = userSlice.actions
+export const {userAmount, setUserEmail, setUserData} = userSlice.actions
 export default userSlice.reducer
