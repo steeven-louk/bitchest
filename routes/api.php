@@ -34,7 +34,7 @@ Route::post('/sell-crypto/{id}', [CryptoCurrenciesController::class, "sellCrypto
 Route::post('/payer-crypto', [CryptoCurrenciesController::class, "buyCrypto"]);
 
 
-Route::get('/get-crypto/{id}', [CryptoCurrenciesController::class, "showCrypto"]);
+Route::get('/get-crypto/{cotation}', [CryptoCurrenciesController::class, "showCrypto"]);
 Route::get('/get-user/{email}', [AuthenticatedSessionController::class, "show"]);
 
 // Route::apiResource('/admin/get-users', AdminController::class);

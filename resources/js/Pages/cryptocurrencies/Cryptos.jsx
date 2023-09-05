@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const Cryptos = () => {
-  const [crypto, setCrypto] = useState([]);
-console.log("crypto", crypto);
+    const [crypto, setCrypto] = useState([]);
+    const user_id = useSelector(state => state.user.userInfo.userData.id);
+
     const getCrypto = async()=>{
         try {
           const data = await axios.get("http://localhost:8000/api/get-currencies");
@@ -16,7 +19,7 @@ console.log("crypto", crypto);
 
       const buyUserCrypto = async(item)=>{
         // const price = item.cryptocurrency.cotation * item.quantity;
-        let user_id = 2;
+        // let user_id = 2;
         let cryptocurrency_id = item.id;
         const data ={
           user_id: user_id,
@@ -29,6 +32,7 @@ console.log("crypto", crypto);
           const response = await axios.post("http://localhost:8000/api/payer-crypto", data);
     
           console.log('data-buy', response);
+          toast(response.data.message);
         } catch (error) {
           console.log('error', error)
         }

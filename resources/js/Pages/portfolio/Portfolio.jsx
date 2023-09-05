@@ -9,23 +9,20 @@ import { userAmount } from '../../redux/userSlice';
 const Portfolio = () => {
 
   const [userWallet, setUserWallet] = useState([]);
-  const [totalPortfolioValue, setTotalPortfolioValue] = useState();
-  const [cryptoData, setCryptoData] = useState({});
+  const [cryptoData, setCryptoData] = useState();
   const [openModal, setOpenModal] = useState(false);
   
   
   const showModal = (item) => {
     setOpenModal(true);
     setCryptoData(item);
-    console.log('itemModal', item)
   };
   const handleCancel = () => {
     setOpenModal(false);
-    setCryptoData(null);
+    setCryptoData("");
   };
   const id = 2;
 
-  console.log('cryptollll', cryptoData)
 
   const getUserWallets = async()=>{
     try {
@@ -54,6 +51,7 @@ const Portfolio = () => {
       const response = await axios.post("http://localhost:8000/api/sell-crypto/"+item.id, data);
 
       console.log('data', response);
+      toast(response.data.message);
       await getUserWallets();
     } catch (error) {
       console.log('error', error)
@@ -72,7 +70,6 @@ useEffect(() => {
   return total + (wallet.quantity * wallet.cryptocurrency.cotation)
  }, 0);
  dispatch(userAmount(totalValue));
- setTotalPortfolioValue(totalValue);
 }, [userWallet]);
 
 
@@ -96,28 +93,16 @@ useEffect(() => {
         <td className=' align-baseline inline-flex gap-3'><img src={`assets/${item.cryptocurrency.logo}.png`} alt={`logo ${item.cryptocurrency.name}`} /> {item.cryptocurrency.name}</td>
         <td className='capitalize'>{item.cryptocurrency.cotation} $</td>
         <td className='font-semibold'>{item.quantity}</td>
-        <td>
-          <span onClick={()=>sellUserCrypto(item)} className='text-red-800 font-semibold cursor-pointer'>sell</span>
-          <span onClick={()=>showModal(item)} className='text-red-800 font-semibold cursor-pointer'>view</span>
+        <td className='flex gap-3 text-center'>
+          <span onClick={()=>sellUserCrypto(item)} className='text-white bg-green-800 rounded-md font-semibold p-2 cursor-pointer'>sell</span>
+          <span onClick={()=>showModal(item)} className='text-white bg-blue-800 rounded-md font-semibold p-2 cursor-pointer'>view</span>
         </td>
-      </tr><div>
-          {/* <Modal
-            open={openModal}
-            title="update user"
-            onCancel={handleCancel}
-            footer={[
-              <Button key="back" onClick={handleCancel}>
-                Return
-              </Button>,
-            ]}
-          >
-            <span>test</span>
-          </Modal> */}
-
+      </tr>
+      
+      <div>
           <ModalComponent openModal={openModal} handleCancel={handleCancel} crypto={cryptoData} btnText="sell" />
-        </div></>
+      </div></>
     ))}
-    <span className='font-bold'>{totalPortfolioValue} $</span>
 
   </tbody>
 </table>
