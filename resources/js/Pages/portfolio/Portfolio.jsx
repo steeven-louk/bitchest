@@ -1,17 +1,19 @@
 
 import React, { useEffect, useState } from 'react'
-// import { Button } from 'antd'
+
 import axios from 'axios';
 import { ModalComponent } from '../../Components/Modal/Modal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userAmount } from '../../redux/userSlice';
+import { toast } from 'react-toastify';
+
 
 const Portfolio = () => {
 
   const [userWallet, setUserWallet] = useState([]);
   const [cryptoData, setCryptoData] = useState();
   const [openModal, setOpenModal] = useState(false);
-  
+  // const user_id = useSelector(state => state.user.);
   
   const showModal = (item) => {
     setOpenModal(true);
@@ -28,7 +30,7 @@ const Portfolio = () => {
     try {
       const data = await axios.get("http://localhost:8000/api/get-wallets/"+id);
       if(data.status === 200) setUserWallet(data.data);
-    console.log(data)
+    // console.log(data)
     } catch (error) {
       console.log(error)
     }
@@ -58,7 +60,6 @@ const Portfolio = () => {
     }
   }
 
-  // console.log('userWallet', userWallet)
 const dispatch = useDispatch();
 useEffect(() => {
   getUserWallets();

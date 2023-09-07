@@ -14,6 +14,8 @@ use Inertia\Inertia;
 
 class AuthenticatedSessionController extends Controller
 {
+
+    protected $loggedOutTo = '/login';
     /**
      * Display the login view.
      *

@@ -34,6 +34,9 @@ Route::middleware('guest')->group(function () {
                 ->name('password.update');
 });
 
+// Route::get('/', [AuthenticatedSessionController::class, 'create'])
+// ->middleware('guest')
+
 Route::middleware('auth')->group(function () {
     Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])
                 ->name('verification.notice');

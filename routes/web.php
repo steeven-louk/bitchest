@@ -29,16 +29,16 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/user-management', function () {
-    return Inertia::render('admin/UserManagement');
-})->middleware(['auth', 'verified'])->name('management');
+// Route::get('/user-management', function () {
+//     return Inertia::render('admin/UserManagement');
+// })->middleware(['auth', 'verified'])->name('management');
 
-Route::get('/portfolio', function () {
-    return Inertia::render('portfolio/Portfolio');
-})->middleware(['auth', 'verified'])->name('portfolio');
+// Route::get('/portfolio', function () {
+//     return Inertia::render('portfolio/Portfolio');
+// })->middleware(['auth', 'verified'])->name('portfolio');
 
-Route::get('/cryptocurrency', function(){
-    return view('cryptocurrencies/Cryptos');
-});
+// Route::get('/cryptocurrency', function(){
+//     return view('cryptocurrencies/Cryptos');
+// });
 // Route::get('/user-management', [AdminController::class, 'index'])->name("management");
 require __DIR__.'/auth.php';

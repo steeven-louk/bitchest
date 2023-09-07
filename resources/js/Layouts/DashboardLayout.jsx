@@ -3,7 +3,7 @@ import React from 'react'
 
 import { Layout, theme } from 'antd';
 import { Link, Outlet } from 'react-router-dom';
-import axios from 'axios';
+
 import { useSelector } from 'react-redux';
 const { Header, Content, Sider } = Layout;
 

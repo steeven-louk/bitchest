@@ -64,8 +64,8 @@ const Cryptos = () => {
                     <td scope="row">{item.cotation}</td>
 
                     <td className='btn-group inline-flex gap-2'>
-                        <button className="text-white p-1 rounded-md bg-green-500">view</button>
-                        <button onClick={()=>buyUserCrypto(item)} className="text-white p-1 rounded-md bg-blue-800">payer</button>
+                        <button className="text-white p-2 rounded-md bg-green-500">view</button>
+                        <button onClick={()=>buyUserCrypto(item)} className="text-white p-2 rounded-md bg-blue-800">buy</button>
                     </td>
                 </tr>
                ))}

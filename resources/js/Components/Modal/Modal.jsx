@@ -33,7 +33,7 @@ const getCotationFor = async()=>{
     getCotationFor();
   }, [cryptoName]);
 
-  const testtt = CryptoCotation?.data?.response?.map((item)=>item.cotation )
+  const getCotation = CryptoCotation?.data?.response?.map((item)=>item.cotation )
   const labels = CryptoCotation?.data?.response?.map((item)=>item.date);
 
 
@@ -41,13 +41,12 @@ const getCotationFor = async()=>{
         labels: labels,
         datasets: [
             {
-                label: 'test',
-                data: testtt,
+                label: cryptoName,
+                data: getCotation,
                 borderColor: 'red',
                 backgroundColor: ['green','blue'],
                 fill: true,
                 tension: 0.1
-
             },
         ],
         options:{
@@ -60,7 +59,7 @@ const getCotationFor = async()=>{
     <>
         <Modal
             open={openModal}
-            // title={crypto.cryptocurrency}
+            title={cryptoName}
             onCancel={handleCancel}
             footer={[
               <Button key="back" onClick={handleCancel}>
@@ -71,9 +70,7 @@ const getCotationFor = async()=>{
               </Button>
             ]}
           >
-           {/* <Line data={chartData} className='w-[100%]' />
-            */}
-            <h5>fdf</h5>
+         
             <Line data={chartData} />
           </Modal>
     </>

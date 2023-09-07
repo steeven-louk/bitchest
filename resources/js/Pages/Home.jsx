@@ -47,7 +47,7 @@ getCrypto();
         <Card  className='text-green-700 w-[350px] rounded-md' key={item.id}>
           <div className="gap-3 text-center font-bold">
             <div className="card-img">
-              <img src={`assets/${item.logo}.png`} alt={item.name} className=' object-cover' width="100%" />
+              <img src={`assets/${item.logo}.png`} alt={item.name} className=' object-cover text-center' width="80%" />
             </div>
             <h5 className="capitalize">{item.name}</h5>
           </div>

@@ -1,4 +1,4 @@
-import { Button, Form, Modal, Input, Radio  } from 'antd'
+import { Button, Form, Modal, Input, Radio, Table, Space  } from 'antd'
 import { Header } from 'antd/es/layout/layout'
 import React, { useEffect, useState } from 'react'
 
@@ -9,14 +9,27 @@ import Title from 'antd/es/typography/Title';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
+import Pagination from '../../Components/Pagination';
 
 const UserManagement = () => {
 
   const [getUser, setGetUser] = useState([]);
+  const [userId, setUserId] = useState();
   const [openModal, setOpenModal] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
+
+  const itemsPerPage = 10; //Nombre d'élément par page
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = getUser.slice(indexOfFirstItem, indexOfLastItem);
+
+  const onPageChange = (pageNumber) =>{
+    setCurrentPage(pageNumber);
+  }
 
   const getUsers= async ()=>{
     try {
@@ -28,15 +41,20 @@ const UserManagement = () => {
     }
    }
 
+
+
 useEffect(() => {
  getUsers();
 }, []);
 
-const showModal = () => {
+const showModal = (id) => {
   setOpenModal(true);
+  setUserId(id);
 };
 const handleCancel = () => {
   setOpenModal(false);
+  setUserId(null);
+
 };
 
 const deleteUser = async(id,e)=>{
@@ -78,8 +96,7 @@ const deleteUser = async(id,e)=>{
 const handleUpdate =async()=>{
 
   try {
-   await axios.put("http://localhost:8000/api/admin/get-users/" + 3,{
-    //  data
+   await axios.put("http://localhost:8000/api/admin/get-users/" + userId,{
     name: name,
     email: email,
     status:role
@@ -128,43 +145,50 @@ const [form] = Form.useForm();
       : null;
 
 
-      return (
-    <>
-      {/* <Header className='text-white'>
-        <Title level={3} type='success' className=" uppercase font-semibold flex my-auto ">user management</Title> 
-      </Header> */}
 
-      {/* <Table columns={columns} dataSource={data} />; */}
-      <table className="min-w-full">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col" className='px-4 py-2'>Name</th>
-      <th scope="col" className='px-4 py-2'>Email</th>
-      <th scope="col" className='px-4 py-2'>Status</th>
-      <th colSpan={3} className='px-4 py-2'>action</th>
-    </tr>
-  </thead>
-  <tbody className="table-group-divider">
-  {getUser?.map((item)=>(
-    <tr key={item.id} className=' align-baseline'>
-      <th scope="row">{item.id}</th>
-      <td className='border-2 px-4 py-2'>{item.name}</td>
-      <td className='border-2 px-4 py-2'>{item.email}</td>
-      <td className='border-2 px-4 py-2 text-center font-bold'>{item.status}</td>
-      <td className='border-2 px-4 py-2 text-center font-bold'>
-        <span onClick={showModal} className='text-[#fff] bg-blue-700 cursor-pointer mx-3 p-2 rounded-md'>update</span>
-        <span className='text-[#fff] bg-red-700 cursor-pointer p-2 rounded-md' onClick={(e)=>deleteUser(item.id, e)}>delete</span>
-      </td>
-    </tr>
-  ))}
-    
-  </tbody>
-</table>
+      const dataSource = getUser
+      
+const columns = [
+  {
+    title: 'id',
+    dataIndex: 'id',
+    rowScope: 'row',
+  },
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+  },
+  {
+    title: 'Email',
+    dataIndex: 'email',
+    key: 'email',
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'status',
+  },
+  {
+    title: 'Action',
+    dataIndex: '',
+    key: 'x',
+   
+    render:(_, record) => (
+        <Space size="middle" className='gap-3'>
+          <a className='text-[#fff] bg-blue-700 p-2 rounded-md' onClick={()=>showModal(record.id)}>update </a>
+          <a className='text-[#fff] bg-red-700 p-2 rounded-md' onClick={(e)=>deleteUser(record.id, e)}>Delete</a>
+        </Space>
+      )
+  },
+];
+
+      return (
+     <>
+
 <Modal
         open={openModal}
-        title="update"
-        className='border-3 border-green-800 shadow-md rounded-md p-3'
+        className=' border-spacing-3 border-green-800 shadow-md rounded-md p-3'
         onCancel={handleCancel}
         footer={[
           <Button key="back" onClick={handleCancel}>
@@ -198,14 +222,49 @@ const [form] = Form.useForm();
           </Radio.Group>
         </Form.Item>
       <Form.Item {...buttonItemLayout}>
-        <Button type="submit" onClick={handleUpdate} className='bg-blue-800 text-white'>Submit</Button>
+        <Button type="submit" onClick={handleUpdate} className='bg-blue-800 text-white'>Update</Button>
       </Form.Item>
 
     </Form>
 </Modal>
 
-    </>
+
+<Table rowKey={(record)=> record.id} dataSource={dataSource} columns={columns} />;
+
+</>
   )
 }
+//       {/* <Header className='text-white'>
+//         <Title level={3} type='success' className=" uppercase font-semibold flex my-auto ">user management</Title> 
+//       </Header> */}
 
+//       {/* <Table columns={columns} dataSource={data} />; */}
+//       <table className="min-w-full">
+//   <thead>
+//     <tr>
+//       <th scope="col">#</th>
+//       <th scope="col" className='px-4 py-2'>Name</th>
+//       <th scope="col" className='px-4 py-2'>Email</th>
+//       <th scope="col" className='px-4 py-2'>Status</th>
+//       <th colSpan={3} className='px-4 py-2'>action</th>
+//     </tr>
+//   </thead>
+//   <tbody className="table-group-divider">
+//   {currentItems?.map((item)=>(
+//     <tr key={item.id} className=' align-baseline'>
+//       <th scope="row">{item.id}</th>
+//       <td className='border-2 px-4 py-2'>{item.name}</td>
+//       <td className='border-2 px-4 py-2'>{item.email}</td>
+//       <td className='border-2 px-4 py-2 text-center font-bold'>{item.status}</td>
+//       <td className='border-2 px-4 py-2 text-center font-bold'>
+//         <span onClick={()=>showModal(item.id)} className='text-[#fff] bg-blue-700 cursor-pointer mx-3 p-2 rounded-md'>update</span>
+//         <span className='text-[#fff] bg-red-700 cursor-pointer p-2 rounded-md' onClick={(e)=>deleteUser(item.id, e)}>delete</span>
+//       </td>
+//     </tr>
+//   ))}
+    
+//   </tbody>
+//   {/* Affichez la pagination */}
+//   {/* <Pagination/> */}
+// </table>
 export default UserManagement

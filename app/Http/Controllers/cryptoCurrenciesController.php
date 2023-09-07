@@ -18,7 +18,7 @@ class CryptoCurrenciesController extends Controller
        try {
         $crypto = cryptocurrencies::all();
 
-        return  Response()->json($crypto, 200);
+        return response()->json($crypto, 200);
        } catch (Error $error) {
         throw $error;
         return response()->json($error);
@@ -53,7 +53,7 @@ class CryptoCurrenciesController extends Controller
         } catch (\Exception $e) {
         return response()->json(['message' => 'Error selling crypto', 'error' => $e->getMessage()], 500);
     }
-    }
+}
 
     public function buyCrypto(Request $request)
     {
@@ -65,12 +65,12 @@ class CryptoCurrenciesController extends Controller
 
             $addInWallet = new client_wallets();
 
-            if($cryptocurrency_id === $addInWallet-> cryptocurrency_id){
-                $update = client_wallets::where("cryptocurrency_id", $cryptocurrency_id)->first();
-                $update->quantity += $quantity;
-                $update->save();
-            }
-            else{
+            // if($cryptocurrency_id === $addInWallet-> cryptocurrency_id){
+            //     $update = client_wallets::where("cryptocurrency_id", $cryptocurrency_id)->first();
+            //     $update->quantity += $quantity;
+            //     $update->save();
+            // }
+            // else{
 
                 $addInWallet -> user_id = $user_id;
                 $addInWallet -> cryptocurrency_id = $cryptocurrency_id;
@@ -79,28 +79,27 @@ class CryptoCurrenciesController extends Controller
                 $addInWallet -> save();
     
                 return response()->json(['message' => 'Crypto buy successfully']);
-            }
+            // }
     
         } catch (\Exception $e) {
         return response()->json(['message' => 'Error buying crypto', 'error' => $e->getMessage()], 500);
     }
     }
 
-    public function showCrypto (Request $request, $id )
+    public function showCrypto (Request $request, $cotation )
     {
         // $crypto_id = $request('id');
         // dd($crypto_id);
        try {
-        $get_crypto= cryptocurrencies::where('id', $id)->get();
+ 
+    $data =[];
 
-        $day =0;
-        $cotation= 'bitcoin';
-       for ($i=$day; $i <30; $i++) { 
-       $data=CotationServices::getCotationFor($cotation);
-        return response()->json([$data, $day[$i]]);
-       }
-
-        return response()->json($get_crypto);
+    for($i = 0; $i< 30; $i++){
+        $date = now()->subDays($i)->format('Y-m-d');
+        $cotation = CotationServices::getCotationFor($cotation);
+        $data[]= ['date'=> $date,'cotation'=> $cotation];
+    };
+    return response()->json(['message'=>"cotation sur 30j", "response"=>$data]);
        } catch (\Throwable $th) {
        return response()->json($th);
        }

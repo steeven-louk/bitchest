@@ -1,34 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import ApplicationLogo from '../Components/ApplicationLogo';
-import Dropdown from '../Components/Dropdown';
-import NavLink from '../Components/NavLink';
-import ResponsiveNavLink from '../Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/inertia-react';
-import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+// import ApplicationLogo from '../Components/ApplicationLogo';
+// import Dropdown from '../Components/Dropdown';
+// import NavLink from '../Components/NavLink';
+// import ResponsiveNavLink from '../Components/ResponsiveNavLink';
+// import { Link } from '@inertiajs/inertia-react';
+// import axios from 'axios';
+import { useDispatch } from 'react-redux';
 import { setUserData } from '../redux/userSlice';
 
 export default function Authenticated({ auth, header, children }) {
-    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-    const email = useSelector(state => state.userInfo?.email);
+    // const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+    // const email = useSelector(state => state.userInfo?.email);
     const dispatch = useDispatch();
+
+
     useEffect(() => {
-       async function getUserData(){
-        const data = await axios.get("http://localhost:8000/api/get-user/"+ email);
-        if(data.status === 200){
-            dispatch(setUserData({
-            'id': data.data.id,
-            'name': data.data.name,
-            'status': data.data.status
+        dispatch(setUserData({
+            'id': auth.user.id,
+            'name': auth.user.name,
+            'status': auth.user.status
         }));
-        }
-        console.log('from',data)
-       };
-       getUserData()
-    }, []);
+    }, [])
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-black">
+
             {/* <nav className="bg-white border-b border-gray-100">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
