@@ -115,6 +115,7 @@ const Profile = () => {
     
       const user_id = useSelector(state => state.user?.userInfo?.userData?.id);
       const username = useSelector(state => state.user?.userInfo?.userData?.name);
+      const userRole = useSelector(state => state.user?.userInfo?.userData?.status);
 
   
       
@@ -126,7 +127,7 @@ const Profile = () => {
         setOpenModal(false);
         setCryptoData("");
       };
-      const id = 2;
+      // const id = 2;
     
     
       const getUserWallets = async()=>{
@@ -166,7 +167,7 @@ const Profile = () => {
     const dispatch = useDispatch();
     useEffect(() => {
       getUserWallets();
-    }, [id]);
+    }, [user_id]);
     
     useEffect(() => {
      //Calculate total portfolio value
@@ -222,43 +223,46 @@ const Profile = () => {
 
 </Form>
     </Card>
+
+    {userRole === "user"  &&
+   <>
    <Card title="TRANSACTION">
-        <Table rowKey={(record) => record.id} dataSource={dataSource} columns={columns} />
+            <Table rowKey={(record) => record.id} dataSource={dataSource} columns={columns} />
 
-      </Card>
-      <Card title="PORTFOLIO" className='mt-4'>
-        <table className="table w-[100%] hover:border-collapse">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>name</th>
-              <th>cotation</th>
-              <th>quantity</th>
-              <th>action</th>
-            </tr>
-          </thead>
-          <tbody className='text-center'>
-            {userWallet?.map((item, index) => (
-              <>
-                <tr key={item.id}>
-                  <td>{index + 1}</td>
-                  <td className=' align-baseline inline-flex gap-3'><img src={`assets/${item.cryptocurrency.logo}.png`} alt={`logo ${item.cryptocurrency.name}`} /> {item.cryptocurrency.name}</td>
-                  <td className='capitalize'>{item.cryptocurrency.cotation} $</td>
-                  <td className='font-semibold'>{item.quantity}</td>
-                  <td className='flex gap-3 text-center'>
-                    <span onClick={() => sellUserCrypto(item)} className='text-white bg-green-800 rounded-md font-semibold p-2 cursor-pointer'>sell</span>
-                    <span onClick={() => showModal(item)} className='text-white bg-blue-800 rounded-md font-semibold p-2 cursor-pointer'>view</span>
-                  </td>
-                </tr>
+          </Card><Card title="PORTFOLIO" className='mt-4'>
+              <table className="table w-[100%] hover:border-collapse">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>name</th>
+                    <th>cotation</th>
+                    <th>quantity</th>
+                    <th>action</th>
+                  </tr>
+                </thead>
+                <tbody className='text-center'>
+                  {userWallet?.map((item, index) => (
+                    <>
+                      <tr key={item.id}>
+                        <td>{index + 1}</td>
+                        <td className=' align-baseline inline-flex gap-3'><img src={`assets/${item.cryptocurrency.logo}.png`} alt={`logo ${item.cryptocurrency.name}`} /> {item.cryptocurrency.name}</td>
+                        <td className='capitalize'>{item.cryptocurrency.cotation} $</td>
+                        <td className='font-semibold'>{item.quantity}</td>
+                        <td className='flex gap-3 text-center'>
+                          <span onClick={() => sellUserCrypto(item)} className='text-white bg-green-800 rounded-md font-semibold p-2 cursor-pointer'>sell</span>
+                          <span onClick={() => showModal(item)} className='text-white bg-blue-800 rounded-md font-semibold p-2 cursor-pointer'>view</span>
+                        </td>
+                      </tr>
 
-                <div>
-                  <ModalComponent openModal={openModal} handleCancel={handleCancel} crypto={cryptoData} btnText="sell" />
-                </div></>
-            ))}
+                      <div>
+                        <ModalComponent openModal={openModal} handleCancel={handleCancel} crypto={cryptoData} btnText="sell" />
+                      </div></>
+                  ))}
 
-          </tbody>
-        </table>
-      </Card>
+                </tbody>
+              </table>
+            </Card></>
+    }
    </div>
       </>
   )

@@ -1,3 +1,4 @@
+import { Space, Table } from 'antd';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -5,6 +6,9 @@ import { toast } from 'react-toastify';
 const Cryptos = () => {
     const [crypto, setCrypto] = useState([]);
     const user_id = useSelector(state => state?.user?.userInfo?.userData?.id);
+    const userRole = useSelector(state => state.user?.userInfo?.userData?.status);
+
+    const dataSource = crypto;
 
     const getCrypto = async()=>{
         try {
@@ -38,40 +42,73 @@ const Cryptos = () => {
         }
       }
 
+      const columns = [
+        {
+          title: 'id',
+          dataIndex: 'id',
+          rowScope: 'row',
+        },
+        {
+          title: 'Name',
+          dataIndex: 'name',
+          key: 'name',
+        },
+        {
+          title: 'Cotation',
+          dataIndex: 'cotation',
+          key: 'cotation',
+        },
+        {
+          title: 'Action',
+          dataIndex: '',
+          key: 'x',
+         
+          render:(_, record) => (
+              <Space size="middle" className='gap-3'>
+                <a className='text-white p-2 rounded-md bg-green-800' onClick={()=>showModal(record.id)}>view </a>
+               {userRole === "user" && <a className='text-white p-2 rounded-md bg-blue-800' onClick={()=>buyUserCrypto(record)}>buy</a>}
+              </Space>
+            )
+        },
+      ];
+
 
       useEffect(() => {
         getCrypto();
       }, []);
 
   return (
-    <table className="table table-hover w-[100%] table-inverse table-responsive">
-        <thead className="thead-inverse">
-            <tr>
-                <th>#</th>
-                <th>name</th>
-                <th>cotation</th>
-                <th colSpan={2}>action</th>
-            </tr>
-            </thead>
-            <tbody className='text-center'>
-               {crypto?.map((item)=>(
-                <tr key={item.id}>
-                    <td scope="row">{item.id}</td>
-                    <td className='inline-flex align-baseline gap-2'>
-                        <img src={`assets/${item.logo}.png`} alt={item.name} className=' object-cover' />
-                        {item.name}
-                    </td>
-                    <td scope="row">{item.cotation}</td>
+    // <table className="table table-hover w-[100%] table-inverse table-responsive">
+    //     <thead className="thead-inverse">
+    //         <tr>
+    //             <th>#</th>
+    //             <th>name</th>
+    //             <th>cotation</th>
+    //             <th colSpan={2}>action</th>
+    //         </tr>
+    //         </thead>
+    //         <tbody className='text-center'>
+    //            {crypto?.map((item)=>(
+    //             <tr key={item.id}>
+    //                 <td scope="row">{item.id}</td>
+    //                 <td className='inline-flex align-baseline gap-2'>
+    //                     <img src={`assets/${item.logo}.png`} alt={item.name} className=' object-cover' />
+    //                     {item.name}
+    //                 </td>
+    //                 <td scope="row">{item.cotation}</td>
 
-                    <td className='btn-group inline-flex gap-2'>
-                        <button className="text-white p-2 rounded-md bg-green-500">view</button>
-                        <button onClick={()=>buyUserCrypto(item)} className="text-white p-2 rounded-md bg-blue-800">buy</button>
-                    </td>
-                </tr>
-               ))}
+    //                 <td className='btn-group inline-flex gap-2'>
+    //                     <button className="text-white p-2 rounded-md bg-green-500">view</button>
+    //                     <button onClick={()=>buyUserCrypto(item)} className="text-white p-2 rounded-md bg-blue-800">buy</button>
+    //                 </td>
+    //             </tr>
+    //            ))}
                 
-            </tbody>
-    </table>
+    //         </tbody>
+    // </table>
+
+<Table rowKey={(record)=> record.id} dataSource={dataSource} columns={columns} />
+
   )
 }
 

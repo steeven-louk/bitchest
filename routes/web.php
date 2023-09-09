@@ -31,7 +31,11 @@ Route::get('/', [AuthenticatedSessionController::class, 'create'])
     ->middleware('guest')
     ->name('login');
 
-
+    Route::middleware(['auth'])->group(function () {
+    
+        Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+            ->name('logout');
+    });
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

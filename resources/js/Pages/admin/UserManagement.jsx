@@ -51,7 +51,6 @@ const deleteUser = async(id,e)=>{
   e.preventDefault();
 
   try {
-    const data = await axios.delete("http://localhost:8000/api/admin/get-users/" + id);
 
     Swal.fire({
   title: 'Are you sure?',
@@ -64,6 +63,8 @@ const deleteUser = async(id,e)=>{
 }).then(async(result) => {
 
   if (result.isConfirmed) {
+    const data = await axios.delete("http://localhost:8000/api/admin/get-users/" + id);
+
     if(data.status === 200){
       console.log("datasupp", data);
       Swal.fire(
@@ -219,7 +220,7 @@ const columns = [
 </Modal>
 
 
-<Table rowKey={(record)=> record.id} dataSource={dataSource} columns={columns} />;
+<Table rowKey={(record)=> record.id} dataSource={dataSource} columns={columns} />
 
 </>
   )

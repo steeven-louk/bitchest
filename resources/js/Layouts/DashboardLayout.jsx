@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react'
 
 import { Card, Layout, Space, theme } from 'antd';
 import { Link, Outlet } from 'react-router-dom';
-
+import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 const { Header, Content, Sider } = Layout;
 
@@ -39,6 +40,29 @@ const DashboardLayout = () => {
      }, []);
 
     
+     const handleLogout =()=>{
+      try {
+        Swal.fire({
+          title: 'LOGOUT',
+          text: "You won't logout!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, log out!'
+        }).then(async(result) => {
+        
+          if (result.isConfirmed) {
+          await axios.post('/logout');
+           
+          }
+        });
+       
+    } catch (error) {
+      toast(error.message)
+        console.error('Erreur lors de la déconnexion :', error);
+    }
+     }
 
      return (
         <Layout className=' overflow-hidden overflow-y-hidden'>
@@ -67,9 +91,9 @@ const DashboardLayout = () => {
             {role === "admin" &&    <li className="nav-item"><Link to="user-management" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Manage user</Link></li>}
             </ul>
             <div className="btn-group flex flex-col">
-            <span className='text-white text-xl shadow-green-500 shadow-sm text-center mb-3 font-bold uppercase'>solde : {wallets}$</span>
-            <button className='uppercase text-md tracking-tight p-3 text-white font-semibold bg-green-500 hover:bg-red-500 transition hover:ease-in-out duration-300'>
-              <Link to={"logout"}>Logout</Link>
+          {role === "user" &&  <span className='text-white text-xl shadow-green-500 shadow-sm text-center mb-3 font-bold uppercase'>solde : {wallets}$</span> }
+            <button onClick={handleLogout} className='uppercase text-md tracking-tight p-3 text-white font-semibold bg-green-500 hover:bg-red-500 transition hover:ease-in-out duration-300'>
+              Logout
             </button>
             </div>
            </div>
@@ -114,7 +138,7 @@ const DashboardLayout = () => {
      <p>{username}</p>
      <small>{userEmail ? userEmail : 'attente@gmail.com'}</small>
     </Card>
-
+{role === "user" &&
     <Card title="Transactions">
         <div className='flex flex-col gap-2'>
             {history?.map((crypto)=>(
@@ -130,43 +154,14 @@ const DashboardLayout = () => {
             ))} 
         </div>
     </Card>
-
+}
   </Space>
    
           </Sider>
 
 
         </Layout>
-  // <div className='admin-layout flex overflow-hidden'>
-  //   <div className="sidebar w-[10em]  h-screen bg-slate-600 text-white">
-  //     <header>img</header>
-  //     <div className="route-liste">
-  //       <ul>
-  //         <li><a href="" className="nav-link">this link</a></li>
-  //         <li><a href="" className="nav-link">this link</a></li>
-  //         <li><a href="" className="nav-link">this link</a></li>
-  //         <li><a href="" className="nav-link">this link</a></li>
-  //         <li><a href="" className="nav-link">this link</a></li>
-  //         <li><a href="" className="nav-link">this link</a></li>
-  //         <li><a href="" className="nav-link">this link</a></li>
-  //         <li><a href="" className="nav-link">this link</a></li>
-  //       </ul>
-  //     </div>
-  //     <div className="bottom-sidebar">
-  //       <button>logout</button>
-  //     </div>
-  //   </div>
-
-  //   <div >
-  //     <header>
-  //       <span className='text-white'>header</span>
-  //     </header>
-
-  //     <main className='w-[60em]'>
-  //       <Outlet />
-  //     </main>
-  //   </div>
-  // </div>
+ 
       );
     };
   
