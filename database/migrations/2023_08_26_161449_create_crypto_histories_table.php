@@ -22,7 +22,7 @@ class CreateCryptoHistoriesTable extends Migration
             $table->string('transaction_type');
             $table->float('cotation');
             $table->unsignedBigInteger('user_id');
-            // $table->timestamp('timestamp');
+            $table->timestamp('timestamp');
             $table->timestamps();
         });
     }
