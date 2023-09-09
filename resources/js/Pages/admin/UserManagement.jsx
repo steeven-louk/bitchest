@@ -20,16 +20,6 @@ const UserManagement = () => {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
 
-  // const itemsPerPage = 10; //Nombre d'élément par page
-  // const [currentPage, setCurrentPage] = useState(1);
-
-  // const indexOfLastItem = currentPage * itemsPerPage;
-  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // const currentItems = getUser.slice(indexOfFirstItem, indexOfLastItem);
-
-  // const onPageChange = (pageNumber) =>{
-  //   setCurrentPage(pageNumber);
-  // }
 
   const getUsers= async ()=>{
     try {

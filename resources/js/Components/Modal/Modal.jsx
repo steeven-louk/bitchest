@@ -16,13 +16,19 @@ ChartJS.register(LineElement,LinearScale,PointElement
 export const ModalComponent = ({openModal, btnText, handleCancel,crypto}, ) => {
 
   const [CryptoCotation, setCryptoCotation] = useState();
+  const [gainMessage, setGainMessage] = useState('');
+  const [cotationOfToday,setCotationOfToday] = useState();
+  
 
   const cryptoName = crypto?.cryptocurrency?.name;
+  const cotation = crypto?.cryptocurrency?.cotation;
+  const gain = cotation + cotationOfToday
 
-const getCotationFor = async()=>{
+
+  const getCotationFor = async()=>{
    try {
     const data = await axios.get("http://localhost:8000/api/get-crypto/" + cryptoName);
-
+    setCotationOfToday(data.data.cotation);
     setCryptoCotation(data)
    } catch (error) {
     console.log('error', error)
@@ -32,6 +38,15 @@ const getCotationFor = async()=>{
   useEffect(() => {
     getCotationFor();
   }, [cryptoName]);
+
+  useEffect(()=>{
+    if(gain < cotation){
+      setGainMessage(`vous faites une moins value de ${gain}`)
+    }else{
+      setGainMessage(`vous faites une plus value de ${gain}`)
+
+    }
+  },[gain]);
 
   const getCotation = CryptoCotation?.data?.response?.map((item)=>item.cotation )
   const labels = CryptoCotation?.data?.response?.map((item)=>item.date);
@@ -72,6 +87,8 @@ const getCotationFor = async()=>{
           >
          
             <Line data={chartData} />
+
+            <h2> {gainMessage} </h2>
           </Modal>
     </>
   )

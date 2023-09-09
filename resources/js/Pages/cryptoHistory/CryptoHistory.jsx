@@ -33,14 +33,22 @@ const CryptoHistory = () => {
           key: 'name',
         },
         {
-          title: 'price',
+          title: 'Price',
           dataIndex: 'price',
           key: 'price',
         },
         {
-          title: 'quantity',
+          title: 'Quantity',
           dataIndex: 'quantity',
           key: 'quantity',
+        },
+        {
+          title: 'Transaction',
+          dataIndex: 'transaction_type',
+          key: 'transaction_type',
+          render:(_, record) => (
+            <span className={`p-2 px-2 uppercase text-white text-center font-bold rounded-sm ${record.transaction_type === "sell" ? "bg-red-800": "bg-green-800"}`}>{record.transaction_type}</span>
+          )
         },
        
       ];

@@ -13,7 +13,7 @@ export default function Authenticated({ auth, header, children }) {
     // const email = useSelector(state => state.userInfo?.email);
     const dispatch = useDispatch();
 
-
+console.log(auth)
     useEffect(() => {
         dispatch(setUserData({
             'id': auth.user.id,

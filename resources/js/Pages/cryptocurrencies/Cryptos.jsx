@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 const Cryptos = () => {
     const [crypto, setCrypto] = useState([]);
-    const user_id = useSelector(state => state.user.userInfo.userData.id);
+    const user_id = useSelector(state => state?.user?.userInfo?.userData?.id);
 
     const getCrypto = async()=>{
         try {
@@ -29,7 +29,7 @@ const Cryptos = () => {
         };
     
         try {
-          const response = await axios.post("http://localhost:8000/api/payer-crypto", data);
+          const response = await axios.post("http://localhost:8000/api/payer-crypto/"+ user_id, data);
     
           console.log('data-buy', response);
           toast(response.data.message);

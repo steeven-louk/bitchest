@@ -13,7 +13,8 @@ const Portfolio = () => {
   const [userWallet, setUserWallet] = useState([]);
   const [cryptoData, setCryptoData] = useState();
   const [openModal, setOpenModal] = useState(false);
-  // const user_id = useSelector(state => state.user.);
+
+  const user_id = useSelector(state => state.user?.userInfo?.userData?.id);
   
   const showModal = (item) => {
     setOpenModal(true);
@@ -23,12 +24,12 @@ const Portfolio = () => {
     setOpenModal(false);
     setCryptoData("");
   };
-  const id = 2;
+
 
 
   const getUserWallets = async()=>{
     try {
-      const data = await axios.get("http://localhost:8000/api/get-wallets/"+id);
+      const data = await axios.get("http://localhost:8000/api/get-wallets/"+ user_id);
       if(data.status === 200) setUserWallet(data.data);
     // console.log(data)
     } catch (error) {
@@ -50,7 +51,7 @@ const Portfolio = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:8000/api/sell-crypto/"+item.id, data);
+      const response = await axios.post("http://localhost:8000/api/sell-crypto/"+user_id+'/'+item.id, data);
 
       console.log('data', response);
       toast(response.data.message);
@@ -63,7 +64,7 @@ const Portfolio = () => {
 const dispatch = useDispatch();
 useEffect(() => {
   getUserWallets();
-}, [id]);
+}, [user_id]);
 
 useEffect(() => {
  //Calculate total portfolio value

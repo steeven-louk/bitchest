@@ -27,7 +27,7 @@ export default function Dashboard(props) {
             <Route  path="/dashboard" element={<Home/>} />
 
             <Route path="cryptocurrencies" element={<Cryptos/>} />
-            {role === "client" &&  <Route path="portfolio" element={<Portfolio/>} />}
+            {role === "user" &&  <Route path="portfolio" element={<Portfolio/>} />}
            
             <Route path="profile" element={<Profile/>} />
             {role === "admin" &&  <Route path="user-management" element={<UserManagement/>}/>}

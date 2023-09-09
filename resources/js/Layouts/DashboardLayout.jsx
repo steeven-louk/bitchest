@@ -60,10 +60,10 @@ const DashboardLayout = () => {
            <div className='align-middle justify-around flex flex-col h-[100%]'>
            <ul className='text-white mx-auto gap-4 flex flex-col p-2'>
                 <li className="nav-item"><Link to="dashboard" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Dashboard</Link></li>
-                {role === "client" && <li className="nav-item"><Link to="crypto-history" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">histories</Link></li>}
+                {role === "user" && <li className="nav-item"><Link to="crypto-history" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">histories</Link></li>}
                 <li className="nav-item"><Link to="profile" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Profil</Link></li>
          <li className="nav-item"><Link to="cryptocurrencies" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Cryptocurrencies</Link></li>
-             {role === "client" && <li className="nav-item"><Link to="portfolio" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Portfolio</Link></li> }
+             {role === "user" && <li className="nav-item"><Link to="portfolio" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Portfolio</Link></li> }
             {role === "admin" &&    <li className="nav-item"><Link to="user-management" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Manage user</Link></li>}
             </ul>
             <div className="btn-group flex flex-col">
@@ -122,7 +122,9 @@ const DashboardLayout = () => {
                 <img src={`assets/${crypto.logo}.png`} alt="crypto" className=' w-[45px] object-cover' />
                 <div className='flex flex-col'>
                 <span>{crypto.crypto_name}</span>
-                  <span className='text-green-800 font-bold'>buy</span>
+                  <span className={`font-bold ${crypto.transaction_type === "sell" ? "text-red-800": "text-green-800"}`}>
+                    {crypto.transaction_type}
+                  </span>
                 </div>
               </article>
             ))} 
