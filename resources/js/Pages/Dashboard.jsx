@@ -12,10 +12,12 @@ import { ToastContainer } from 'react-toastify';
 import CryptoHistory from './cryptoHistory/CryptoHistory';
 import Profile from './user/Profile';
 import { useSelector } from 'react-redux';
+
+
 export default function Dashboard(props) {
 
-    const role = useSelector(state => state.user?.userInfo?.userData?.status);
-
+    const role = useSelector(state => state.user?.userData?.status);
+console.log('propsss', props);
     return (
         <Authenticated
             auth={props.auth}

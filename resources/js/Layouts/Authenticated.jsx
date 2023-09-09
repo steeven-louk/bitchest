@@ -18,6 +18,8 @@ console.log(auth)
         dispatch(setUserData({
             'id': auth.user.id,
             'name': auth.user.name,
+            'email':auth.user.email,
+            'solde': auth.user.solde,
             'status': auth.user.status
         }));
     }, [])

@@ -10,18 +10,19 @@ const { Header, Content, Sider } = Layout;
 
 const DashboardLayout = () => {
 
-  const username = useSelector((state)=> state.user?.userInfo?.userData.name)
-  const userEmail = useSelector((state)=>state.user?.userInfo.email);
-  const role = useSelector(state => state.user?.userInfo?.userData?.status);
+  const username = useSelector((state)=> state.user?.userData?.name)
+  const userEmail = useSelector((state)=>state.user?.userData?.email);
+  const role = useSelector((state) => state.user?.userData?.status);
+  const tesss = useSelector((state) => state.user);
 
-
+console.table(tesss);
     const {
         token: { colorBgContainer },
       } = theme.useToken();
 
 
-     const name = useSelector(state => state.user.userInfo.userData.name);
-     const wallets = useSelector(state => state.user.wallets);
+     const name = useSelector(state => state?.user?.userData?.name);
+     const wallets = useSelector(state => state?.user?.userData?.solde);
 
      const [history, setHistory] = useState([]);
 

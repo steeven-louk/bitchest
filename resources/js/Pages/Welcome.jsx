@@ -6,7 +6,6 @@ export default function Welcome(props) {
     return (
         <>
             <Head title="Welcome" />     
-            <h1>ghjkl</h1>        
             <Login />
         </>
     );

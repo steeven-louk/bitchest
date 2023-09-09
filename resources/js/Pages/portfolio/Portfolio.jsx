@@ -14,7 +14,7 @@ const Portfolio = () => {
   const [cryptoData, setCryptoData] = useState();
   const [openModal, setOpenModal] = useState(false);
 
-  const user_id = useSelector(state => state.user?.userInfo?.userData?.id);
+  const user_id = useSelector(state => state.user?.userData?.id);
   
   const showModal = (item) => {
     setOpenModal(true);

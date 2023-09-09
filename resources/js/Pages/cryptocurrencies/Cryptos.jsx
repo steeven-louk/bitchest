@@ -5,8 +5,8 @@ import { toast } from 'react-toastify';
 
 const Cryptos = () => {
     const [crypto, setCrypto] = useState([]);
-    const user_id = useSelector(state => state?.user?.userInfo?.userData?.id);
-    const userRole = useSelector(state => state.user?.userInfo?.userData?.status);
+    const user_id = useSelector(state => state?.user?.userData?.id);
+    const userRole = useSelector(state => state.user?.userData?.status);
 
     const dataSource = crypto;
 

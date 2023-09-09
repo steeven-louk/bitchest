@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Button, Card, Form, Input, Radio, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { userAmount } from '../../redux/userSlice';
+// import { userAmount } from '../../redux/userSlice';
 import { toast } from 'react-toastify';
 import { ModalComponent } from '../../Components/Modal/Modal';
 import { Head } from '@inertiajs/inertia-react';
@@ -113,9 +113,10 @@ const Profile = () => {
       const dataSource = history;
 
     
-      const user_id = useSelector(state => state.user?.userInfo?.userData?.id);
-      const username = useSelector(state => state.user?.userInfo?.userData?.name);
-      const userRole = useSelector(state => state.user?.userInfo?.userData?.status);
+      const user_id = useSelector(state => state.user?.userData?.id);
+      const username = useSelector(state => state.user?.userData?.name);
+      const userEmail = useSelector(state => state.user?.userData?.email);
+      const userRole = useSelector(state => state.user?.userData?.status);
 
   
       
@@ -169,13 +170,13 @@ const Profile = () => {
       getUserWallets();
     }, [user_id]);
     
-    useEffect(() => {
-     //Calculate total portfolio value
-     const totalValue = userWallet.reduce((total, wallet)=>{
-      return total + (wallet.quantity * wallet.cryptocurrency.cotation)
-     }, 0);
-     dispatch(userAmount(totalValue));
-    }, [userWallet]);
+    // useEffect(() => {
+    //  //Calculate total portfolio value
+    //  const totalValue = userWallet.reduce((total, wallet)=>{
+    //   return total + (wallet.quantity * wallet.cryptocurrency.cotation)
+    //  }, 0);
+    //  dispatch(userAmount(totalValue));
+    // }, [userWallet]);
     
     
   return (
@@ -186,7 +187,7 @@ const Profile = () => {
       <Card className="mx-auto mb-5 justify-center text-center ">
         <img src="assets/cardano.png" alt={`profil-${username}`} className='w-20 h-20 mx-auto mb-3 rounded-full p-1 object-cover' />
         <h2>{username}</h2>
-        <h4>this@gmail.com</h4>
+        <h4>{userEmail}</h4>
 
         <button type='button' onClick={()=> setUpdateCard(true)} className='bg-blue-800 rounded-md mt-4 text-white p-2 capitalize font-bold'>update profil</button>
       </Card>
@@ -250,7 +251,7 @@ const Profile = () => {
                         <td className='font-semibold'>{item.quantity}</td>
                         <td className='flex gap-3 text-center'>
                           <span onClick={() => sellUserCrypto(item)} className='text-white bg-green-800 rounded-md font-semibold p-2 cursor-pointer'>sell</span>
-                          <span onClick={() => showModal(item)} className='text-white bg-blue-800 rounded-md font-semibold p-2 cursor-pointer'>view</span>
+                          <span onClick={()=> showModal(item)} className='text-white bg-blue-800 rounded-md font-semibold p-2 cursor-pointer'>view</span>
                         </td>
                       </tr>
 

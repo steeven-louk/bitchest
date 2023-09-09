@@ -6,8 +6,8 @@ import Input from '../../Components/Input';
 import Label from '../../Components/Label';
 import ValidationErrors from '../../Components/ValidationErrors';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
-import { useDispatch } from 'react-redux';
-import { setUserEmail } from '../../redux/userSlice';
+// import { useDispatch } from 'react-redux';
+// import { setUserEmail } from '../../redux/userSlice';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -22,7 +22,7 @@ export default function Login({ status, canResetPassword }) {
         };
     }, []);
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     const onHandleChange = (event) => {
         setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
@@ -31,7 +31,7 @@ export default function Login({ status, canResetPassword }) {
     const submit = (e) => {
         e.preventDefault();
 
-        dispatch(setUserEmail(data.email));
+        // dispatch(setUserEmail(data.email));
 
         post(route('login'));
     };

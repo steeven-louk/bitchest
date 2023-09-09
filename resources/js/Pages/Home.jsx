@@ -34,7 +34,6 @@ const Home = () => {
   // }
 
   useEffect(() => {
-    // getCryptoT();
 getCrypto();
   }, [])
 
@@ -63,9 +62,7 @@ getCrypto();
 
         </Card>
       </article>
-      {/* <article className='bg-red-800'>
-        <h2 className='text-white'>elft testshf</h2>
-      </article> */}
+   
       
     </>
   )
