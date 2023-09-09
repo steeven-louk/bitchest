@@ -11,7 +11,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import CryptoHistory from './cryptoHistory/CryptoHistory';
 import Profile from './user/Profile';
+import { useSelector } from 'react-redux';
 export default function Dashboard(props) {
+
+    const role = useSelector(state => state.user?.userInfo?.userData?.status);
+
     return (
         <Authenticated
             auth={props.auth}
@@ -21,10 +25,12 @@ export default function Dashboard(props) {
     <Routes>
         <Route path="/" exact element={<DashboardLayout/>}>
             <Route  path="/dashboard" element={<Home/>} />
+
             <Route path="cryptocurrencies" element={<Cryptos/>} />
-            <Route path="portfolio" element={<Portfolio/>} />
+            {role === "client" &&  <Route path="portfolio" element={<Portfolio/>} />}
+           
             <Route path="profile" element={<Profile/>} />
-            <Route path="user-management" element={<UserManagement/>} />
+            {role === "admin" &&  <Route path="user-management" element={<UserManagement/>}/>}
             <Route path="crypto-history" element={<CryptoHistory />} />
         </Route>
     </Routes>

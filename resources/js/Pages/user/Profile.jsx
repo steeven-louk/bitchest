@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { Button, Card, Form, Input, Radio, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userAmount } from '../../redux/userSlice';
 import { toast } from 'react-toastify';
 import { ModalComponent } from '../../Components/Modal/Modal';
+import { Head } from '@inertiajs/inertia-react';
 
 const Profile = () => {
 
@@ -112,7 +113,10 @@ const Profile = () => {
       const dataSource = history;
 
     
-      // const user_id = useSelector(state => state.user.);
+      const user_id = useSelector(state => state.user?.userInfo?.userData?.id);
+      const username = useSelector(state => state.user?.userInfo?.userData?.name);
+
+  
       
       const showModal = (item) => {
         setOpenModal(true);
@@ -127,7 +131,7 @@ const Profile = () => {
     
       const getUserWallets = async()=>{
         try {
-          const data = await axios.get("http://localhost:8000/api/get-wallets/"+id);
+          const data = await axios.get("http://localhost:8000/api/get-wallets/"+ user_id);
           if(data.status === 200) setUserWallet(data.data);
         // console.log(data)
         } catch (error) {
@@ -175,10 +179,12 @@ const Profile = () => {
     
   return (
    <>
+    <Head title="profile" />
+
    <div className="profile h-[90vh] overflow-y-scroll">
       <Card className="mx-auto mb-5 justify-center text-center ">
-        <img src="assets/cardano.png" alt="profil-img" className='w-20 h-20 mx-auto mb-3 rounded-full p-1 object-cover' />
-        <h2>this my name</h2>
+        <img src="assets/cardano.png" alt={`profil-${username}`} className='w-20 h-20 mx-auto mb-3 rounded-full p-1 object-cover' />
+        <h2>{username}</h2>
         <h4>this@gmail.com</h4>
 
         <button type='button' onClick={()=> setUpdateCard(true)} className='bg-blue-800 rounded-md mt-4 text-white p-2 capitalize font-bold'>update profil</button>

@@ -11,12 +11,13 @@ const DashboardLayout = () => {
 
   const username = useSelector((state)=> state.user?.userInfo?.userData.name)
   const userEmail = useSelector((state)=>state.user?.userInfo.email);
+  const role = useSelector(state => state.user?.userInfo?.userData?.status);
+
 
     const {
         token: { colorBgContainer },
       } = theme.useToken();
 
-      const isAdmin = false;
 
      const name = useSelector(state => state.user.userInfo.userData.name);
      const wallets = useSelector(state => state.user.wallets);
@@ -59,11 +60,11 @@ const DashboardLayout = () => {
            <div className='align-middle justify-around flex flex-col h-[100%]'>
            <ul className='text-white mx-auto gap-4 flex flex-col p-2'>
                 <li className="nav-item"><Link to="dashboard" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Dashboard</Link></li>
-                <li className="nav-item"><Link to="crypto-history" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">histories</Link></li>
+                {role === "client" && <li className="nav-item"><Link to="crypto-history" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">histories</Link></li>}
                 <li className="nav-item"><Link to="profile" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Profil</Link></li>
-            {!isAdmin &&    <li className="nav-item"><Link to="cryptocurrencies" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Cryptocurrencies</Link></li>}
-                {!isAdmin &&     <li className="nav-item"><Link to="portfolio" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Portfolio</Link></li> }
-            {!isAdmin &&    <li className="nav-item"><Link to="user-management" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Manage user</Link></li>}
+         <li className="nav-item"><Link to="cryptocurrencies" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Cryptocurrencies</Link></li>
+             {role === "client" && <li className="nav-item"><Link to="portfolio" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Portfolio</Link></li> }
+            {role === "admin" &&    <li className="nav-item"><Link to="user-management" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Manage user</Link></li>}
             </ul>
             <div className="btn-group flex flex-col">
             <span className='text-white text-xl shadow-green-500 shadow-sm text-center mb-3 font-bold uppercase'>solde : {wallets}$</span>
