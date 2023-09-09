@@ -17,9 +17,9 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('Auth/Login', [
         'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
+        // 'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
@@ -29,16 +29,20 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Route::get('/user-management', function () {
-//     return Inertia::render('admin/UserManagement');
-// })->middleware(['auth', 'verified'])->name('management');
+Route::get('/dashboardLayout', function () {
+    return Inertia::render('Layouts/DashboardLayout');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-// Route::get('/portfolio', function () {
-//     return Inertia::render('portfolio/Portfolio');
-// })->middleware(['auth', 'verified'])->name('portfolio');
+Route::get('/user-management', function () {
+    return Inertia::render('admin/UserManagement');
+})->middleware(['auth', 'verified'])->name('UserManagement');
 
-// Route::get('/cryptocurrency', function(){
-//     return view('cryptocurrencies/Cryptos');
-// });
-// Route::get('/user-management', [AdminController::class, 'index'])->name("management");
+Route::get('/portfolio', function () {
+    return Inertia::render('portfolio/Portfolio');
+})->middleware(['auth', 'verified'])->name('portfolio');
+
+Route::get('/profile', function(){
+    return Inertia::render('user/Profile');
+})->middleware(['auth', 'verified'])->name('profile');
+
 require __DIR__.'/auth.php';

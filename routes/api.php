@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ClientWalletsController;
 use App\Http\Controllers\CotationServiceController;
 use App\Http\Controllers\CryptoCurrenciesController;
+use App\Http\Controllers\CryptoHistoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,7 @@ Route::post('/payer-crypto', [CryptoCurrenciesController::class, "buyCrypto"]);
 
 
 Route::get('/get-crypto/{cotation}', [CryptoCurrenciesController::class, "showCrypto"]);
+Route::get('/get-cryptoHistory', [CryptoHistoryController::class, "index"]);
 Route::get('/get-user/{email}', [AuthenticatedSessionController::class, "show"]);
 
 // Route::apiResource('/admin/get-users', AdminController::class);

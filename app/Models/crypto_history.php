@@ -15,6 +15,6 @@ class crypto_history extends Model
          "price" ,
          "quantity" ,
          "cotation",
-         "timestamp"
+        //  "timestamp"
     ];
 }

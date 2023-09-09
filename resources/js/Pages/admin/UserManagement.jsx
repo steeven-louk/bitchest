@@ -9,7 +9,7 @@ import Title from 'antd/es/typography/Title';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
-import Pagination from '../../Components/Pagination';
+
 
 const UserManagement = () => {
 
@@ -20,16 +20,16 @@ const UserManagement = () => {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
 
-  const itemsPerPage = 10; //Nombre d'élément par page
-  const [currentPage, setCurrentPage] = useState(1);
+  // const itemsPerPage = 10; //Nombre d'élément par page
+  // const [currentPage, setCurrentPage] = useState(1);
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = getUser.slice(indexOfFirstItem, indexOfLastItem);
+  // const indexOfLastItem = currentPage * itemsPerPage;
+  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // const currentItems = getUser.slice(indexOfFirstItem, indexOfLastItem);
 
-  const onPageChange = (pageNumber) =>{
-    setCurrentPage(pageNumber);
-  }
+  // const onPageChange = (pageNumber) =>{
+  //   setCurrentPage(pageNumber);
+  // }
 
   const getUsers= async ()=>{
     try {

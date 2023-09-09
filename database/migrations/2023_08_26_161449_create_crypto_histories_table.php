@@ -19,7 +19,9 @@ class CreateCryptoHistoriesTable extends Migration
             $table->string('logo', 100)->nullable();
             $table->decimal('price', 10, 2);
             $table->decimal('quantity', 10, 2);
+            $table->string('transaction_type');
             $table->float('cotation');
+            $table->unsignedBigInteger('user_id');
             // $table->timestamp('timestamp');
             $table->timestamps();
         });

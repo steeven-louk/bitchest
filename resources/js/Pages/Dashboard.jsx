@@ -9,6 +9,8 @@ import UserManagement from './admin/UserManagement';
 import Cryptos from './cryptocurrencies/Cryptos';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import CryptoHistory from './cryptoHistory/CryptoHistory';
+import Profile from './user/Profile';
 export default function Dashboard(props) {
     return (
         <Authenticated
@@ -16,12 +18,14 @@ export default function Dashboard(props) {
             errors={props.errors}
             // header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
         >
-           <Routes>
+    <Routes>
         <Route path="/" exact element={<DashboardLayout/>}>
-            <Route  path="dashboard" element={<Home/>} />
+            <Route  path="/dashboard" element={<Home/>} />
             <Route path="cryptocurrencies" element={<Cryptos/>} />
             <Route path="portfolio" element={<Portfolio/>} />
+            <Route path="profile" element={<Profile/>} />
             <Route path="user-management" element={<UserManagement/>} />
+            <Route path="crypto-history" element={<CryptoHistory />} />
         </Route>
     </Routes>
 

@@ -1,14 +1,14 @@
 
 import React, { useEffect, useState } from 'react'
 
-import { Card } from 'antd';
+import { Card, Space } from 'antd';
 import axios from 'axios';
 import CryptoChart from '../Components/CryptoCharts/CryptoChart';
 
 const Home = () => {
 
   const [crypto, setCrypto] = useState([]);
-  const [T, setT] = useState([]);
+  // const [T, setT] = useState([]);
 
 
   const getCrypto = async()=>{
@@ -20,25 +20,25 @@ const Home = () => {
       console.log(error)
     }
   }
-  const cota = "bitcoin";
+  // const cota = "bitcoin";
  
 
-  const getCryptoT = async()=>{
-    try {
-      const {data} = await axios.get("http://localhost:8000/api/get-cotation/"+cota);
-      setT(data)
+  // const getCryptoT = async()=>{
+  //   try {
+  //     const {data} = await axios.get("http://localhost:8000/api/get-cotation/"+cota);
+  //     setT(data)
 
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   useEffect(() => {
-    getCryptoT();
+    // getCryptoT();
 getCrypto();
   }, [])
 
-  console.log("dgdg",T)
+
   return (
     <>
       <div className="cryptoList flex gap-2 md:overflow-x-scroll ">
@@ -56,13 +56,17 @@ getCrypto();
         
       </div>
 
-      <article className='flex gap-2 mt-2'>
+          <article className='w-full gap-2 mt-2'>
 
-        <Card className="w-[100%]">
-        <CryptoChart data={crypto}/>
+        <Card>
+        <CryptoChart data={crypto} />
 
         </Card>
       </article>
+      {/* <article className='bg-red-800'>
+        <h2 className='text-white'>elft testshf</h2>
+      </article> */}
+      
     </>
   )
 }

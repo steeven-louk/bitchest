@@ -11,19 +11,20 @@ class CryptoHistoryController extends Controller
     public function index()
     {
         $data = crypto_history::all();
+        // dd($data);
         return response()->json($data);
     }
 
-    public function store()
-    {
-        $details=[
-            'crypto_name' => $crypto_name,
-            'logo'=> $logo,
-            'price'=> $price,
-            'quantity'=> $quantity,
-            'cotation'=> $cotation,
-        ];
+    // public function store()
+    // {
+    //     $details=[
+    //         'crypto_name' => $crypto_name,
+    //         'logo'=> $logo,
+    //         'price'=> $price,
+    //         'quantity'=> $quantity,
+    //         'cotation'=> $cotation,
+    //     ];
 
-        crypto_history::create($details);
-    }
+    //     crypto_history::create($details);
+    // }
 }

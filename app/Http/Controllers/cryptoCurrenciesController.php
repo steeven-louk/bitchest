@@ -43,6 +43,9 @@ class CryptoCurrenciesController extends Controller
             $cryptoHistory -> quantity = $quantity;
             $cryptoHistory -> cotation = $cotation;
             $cryptoHistory -> save();
+            response()->json($cryptoHistory);
+          
+            // $this->addToHistory($crypto_name, $quantity,$cotation, $price , $logo);
 
             $getCrypto = client_wallets::findOrFail($id);
             // if($getCrypto) return response()->json(['message'=>'crypto introuvable']);
@@ -88,8 +91,7 @@ class CryptoCurrenciesController extends Controller
 
     public function showCrypto (Request $request, $cotation )
     {
-        // $crypto_id = $request('id');
-        // dd($crypto_id);
+      
        try {
  
     $data =[];
@@ -103,5 +105,23 @@ class CryptoCurrenciesController extends Controller
        } catch (\Throwable $th) {
        return response()->json($th);
        }
+    }
+
+    public function addToHistory($crypto_name, $quantity,$price,$logo, $cotation)
+    {
+        $cryptoHistory = new crypto_history();
+        // crypto_history::create([
+        //     'crypto_name'=> $crypto_name,
+        //     'logo'=> $logo,
+        //     'quantity'=> $quantity,
+        //     'price'=> $price,
+        //     'cotation'=>$cotation
+        // ]);
+        $cryptoHistory -> crypto_name = $crypto_name;
+        $cryptoHistory -> logo = $logo;
+        $cryptoHistory -> price = $price;
+        $cryptoHistory -> quantity = $quantity;
+        $cryptoHistory -> cotation = $cotation;
+        $cryptoHistory -> save();
     }
 }

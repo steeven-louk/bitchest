@@ -26,7 +26,7 @@ const CryptoChart = ({ data, width }) => {
 
    
     // return <><BarElement data={chartData} className='w-[100%]' /></>;
-    return <Bar data={chartData} />;
+    return <Bar data={chartData} width={width}/>;
 
     // const chartRef = useRef();
 
