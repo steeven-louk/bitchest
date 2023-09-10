@@ -9,6 +9,7 @@ import Title from 'antd/es/typography/Title';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
+import DashboardLayout from '../Layouts/DashboardLayout';
 
 
 const UserManagement = () => {

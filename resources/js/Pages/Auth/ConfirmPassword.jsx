@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Button from '../../Components/Button';
-import Guest from '../../Layouts/Guest';
+import Guest from '../Layouts/Guest';
 import Input from '../../Components/Input';
 import Label from '../../Components/Label';
 import ValidationErrors from '../../Components/ValidationErrors';

@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { Button, Card, Form, Input, Radio, Table } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-// import { userAmount } from '../../redux/userSlice';
+import { useSelector } from 'react-redux';
+
 import { toast } from 'react-toastify';
 import { ModalComponent } from '../../Components/Modal/Modal';
 import { Head } from '@inertiajs/inertia-react';
@@ -12,12 +12,18 @@ const Profile = () => {
     const [history, setHistory] = useState([]);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [role, setRole] = useState("");
+    // const [role, setRole] = useState("");
 
     const [userWallet, setUserWallet] = useState([]);
     const [cryptoData, setCryptoData] = useState();
     const [openModal, setOpenModal] = useState(false);
     const [updateCard, setUpdateCard] = useState(false);
+
+    const user_id = useSelector(state => state.user?.userData?.id);
+    const username = useSelector(state => state.user?.userData?.name);
+    const userEmail = useSelector(state => state.user?.userData?.email);
+    const userRole = useSelector(state => state.user?.userData?.status);
+
 
     useEffect(() => {
         const getHistory =async ()=>{
@@ -36,7 +42,7 @@ const Profile = () => {
     const handleUpdate =async()=>{
 
       try {
-       await axios.put("http://localhost:8000/api/admin/get-users/" + userId,{
+       await axios.put("http://localhost:8000/api/admin/get-users/" + user_id,{
         name: name,
         email: email,
         status:role
@@ -113,11 +119,7 @@ const Profile = () => {
       const dataSource = history;
 
     
-      const user_id = useSelector(state => state.user?.userData?.id);
-      const username = useSelector(state => state.user?.userData?.name);
-      const userEmail = useSelector(state => state.user?.userData?.email);
-      const userRole = useSelector(state => state.user?.userData?.status);
-
+    
   
       
       const showModal = (item) => {
@@ -165,18 +167,11 @@ const Profile = () => {
         }
       }
     
-    const dispatch = useDispatch();
     useEffect(() => {
       getUserWallets();
     }, [user_id]);
     
-    // useEffect(() => {
-    //  //Calculate total portfolio value
-    //  const totalValue = userWallet.reduce((total, wallet)=>{
-    //   return total + (wallet.quantity * wallet.cryptocurrency.cotation)
-    //  }, 0);
-    //  dispatch(userAmount(totalValue));
-    // }, [userWallet]);
+  
     
     
   return (

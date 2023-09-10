@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Error;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+
 use Inertia\Inertia;
 
 class AdminController extends Controller
@@ -46,6 +49,19 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+      return  response()->json(['message'=>'user as been created successfully', 'response'=>$user],201);
     }
 
     /**
@@ -112,6 +128,6 @@ class AdminController extends Controller
         //
         $data = User::findOrFail($id);
         $data -> delete();
-        return response()->json(["message"=>"supprimer avec success", $data]);
+        return response()->json(["message"=>"user deleted successfully", $data]);
     }
 }

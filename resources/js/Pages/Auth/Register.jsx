@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import Button from '../../Components/Button';
-import Guest from '../../Layouts/Guest';
+import Guest from '../Layouts/Guest';
 import Input from '../../Components/Input';
 import Label from '../../Components/Label';
 import ValidationErrors from '../../Components/ValidationErrors';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -24,19 +26,33 @@ export default function Register() {
         setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
     };
 
-    const submit = (e) => {
+    const submit = async(e) => {
         e.preventDefault();
-
-        post(route('register'));
+       try {
+        const response = await axios.post("http://localhost:8000/api/admin/get-users", data);
+        // console.log(response)
+        if(response.status === 201){
+            data.name ="";
+            data.email ="";
+            data.password ="";
+            data.password_confirmation ="";
+            setData("");
+            toast(response.data.message)
+        }
+       
+       } catch (error) {
+        console.log(error)
+       }
+        // post(route('register'));
     };
 
     return (
-        <Guest>
-            <Head title="Register" />
-
-            <ValidationErrors errors={errors} />
-
-            <form onSubmit={submit}>
+        // <Guest>
+        
+            <>
+        <Head title="Create User" />
+            {/* //     <Head title="Register" /> */}
+            <ValidationErrors errors={errors} /><form onSubmit={submit}>
                 <div>
                     <Label forInput="name" value="Name" />
 
@@ -48,8 +64,7 @@ export default function Register() {
                         autoComplete="name"
                         isFocused={true}
                         handleChange={onHandleChange}
-                        required
-                    />
+                        required />
                 </div>
 
                 <div className="mt-4">
@@ -62,8 +77,7 @@ export default function Register() {
                         className="mt-1 block w-full"
                         autoComplete="username"
                         handleChange={onHandleChange}
-                        required
-                    />
+                        required />
                 </div>
 
                 <div className="mt-4">
@@ -76,8 +90,7 @@ export default function Register() {
                         className="mt-1 block w-full"
                         autoComplete="new-password"
                         handleChange={onHandleChange}
-                        required
-                    />
+                        required />
                 </div>
 
                 <div className="mt-4">
@@ -89,20 +102,20 @@ export default function Register() {
                         value={data.password_confirmation}
                         className="mt-1 block w-full"
                         handleChange={onHandleChange}
-                        required
-                    />
+                        required />
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
-                    <Link href={route('login')} className="underline text-sm text-gray-600 hover:text-gray-900">
-                        Already registered?
-                    </Link>
+                    {/* <Link href={route('login')} className="underline text-sm text-gray-600 hover:text-gray-900">
+        Already registered?
+    </Link> */}
 
                     <Button className="ml-4" processing={processing}>
                         Register
                     </Button>
                 </div>
             </form>
-        </Guest>
+        {/* // </Guest> */}
+            </>
     );
 }

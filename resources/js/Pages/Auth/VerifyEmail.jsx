@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '../../Components/Button';
-import Guest from '../../Layouts/Guest';
+import Guest from '../Layouts/Guest';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 
 export default function VerifyEmail({ status }) {
