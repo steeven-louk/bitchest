@@ -5,17 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\client_wallets;
 use Error;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClientWalletsController extends Controller
 {
     //
-    public function index($id)
+    public function index($user_id)
     {
         try {
-            $wallets = client_wallets::with(["user","cryptocurrency"])->where("user_id", $id)->get();
-        return response()->json($wallets,200);
+            $wallets = client_wallets::where("user_id", $user_id)->get();
+            return response()->json($wallets,200);
         } catch (Error $error) {
-            response()->json($error);
+           return response()->json($error);
         }
+
+       
     }
 }

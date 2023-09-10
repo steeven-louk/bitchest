@@ -10,12 +10,13 @@ import { toast } from 'react-toastify';
 
 const Portfolio = () => {
 
-  const [userWallet, setUserWallet] = useState([]);
+  const [userWallet, setUserWallet] = useState([null]);
   const [cryptoData, setCryptoData] = useState();
   const [openModal, setOpenModal] = useState(false);
 
   const user_id = useSelector(state => state.user?.userData?.id);
-  
+
+  console.log('wallets',cryptoData)
   const showModal = (item) => {
     setOpenModal(true);
     setCryptoData(item);
@@ -29,9 +30,9 @@ const Portfolio = () => {
 
   const getUserWallets = async()=>{
     try {
-      const data = await axios.get("http://localhost:8000/api/get-wallets/"+ user_id);
-      if(data.status === 200) setUserWallet(data.data);
-    // console.log(data)
+      const data = await axios.get("http://localhost:8000/api/user/wallets/"+ user_id);
+      if(data.status === 200) setUserWallet(data?.data);
+
     } catch (error) {
       console.log(error)
     }
@@ -39,19 +40,19 @@ const Portfolio = () => {
 
 
   const sellUserCrypto = async(item)=>{
-    const price = item.cryptocurrency.cotation * item.quantity;
+    const price = item.cotation * item.quantity;
 
     const data ={
       // id: item.id,
-      crypto_name: item.cryptocurrency.name,
-      logo: item.cryptocurrency.logo,
+      crypto_name: item.name,
+      logo: item.logo,
       price: price,
       quantity: item.quantity,
-      cotation: item.cryptocurrency.cotation,
+      cotation: item.cotation,
     };
 
     try {
-      const response = await axios.post("http://localhost:8000/api/sell-crypto/"+user_id+'/'+item.id, data);
+      const response = await axios.post("http://localhost:8000/api/user/sell-crypto/"+user_id+'/'+item.id, data);
 
       console.log('data', response);
       toast(response.data.message);
@@ -61,18 +62,11 @@ const Portfolio = () => {
     }
   }
 
-const dispatch = useDispatch();
+// const dispatch = useDispatch();
 useEffect(() => {
   getUserWallets();
 }, [user_id]);
 
-useEffect(() => {
- //Calculate total portfolio value
- const totalValue = userWallet.reduce((total, wallet)=>{
-  return total + (wallet.quantity * wallet.cryptocurrency.cotation)
- }, 0);
- dispatch(userAmount(totalValue));
-}, [userWallet]);
 
 
 
@@ -83,18 +77,21 @@ useEffect(() => {
     <tr>
       <th>#</th>
       <th>name</th>
+      <th>price</th>
       <th>cotation</th>
       <th>quantity</th>
       <th>action</th>
     </tr>
   </thead>
   <tbody className='text-center'>
-    {userWallet?.map((item, index)=>(
-      <><tr key={item?.id}>
+  {userWallet?.map((item, index)=>(
+    <>
+      <tr key={item?.id}>
         <td>{index +1}</td>
-        <td className=' align-baseline inline-flex gap-3'><img src={`assets/${item.cryptocurrency.logo}.png`} alt={`logo ${item.cryptocurrency.name}`} /> {item.cryptocurrency.name}</td>
-        <td className='capitalize'>{item.cryptocurrency.cotation} $</td>
-        <td className='font-semibold'>{item.quantity}</td>
+        <td className=' align-baseline inline-flex gap-3'><img src={`assets/${item?.logo}.png`} alt={`logo ${item?.name}`} /> {item?.name}</td>
+        <td className='capitalize'>{item?.price} $</td>
+        <td className='capitalize'>{item?.cotation} $</td>
+        <td className='font-semibold'>{item?.quantity}</td>
         <td className='flex gap-3 text-center'>
           <span onClick={()=>sellUserCrypto(item)} className='text-white bg-green-800 rounded-md font-semibold p-2 cursor-pointer'>sell</span>
           <span onClick={()=>showModal(item)} className='text-white bg-blue-800 rounded-md font-semibold p-2 cursor-pointer'>view</span>
@@ -103,7 +100,8 @@ useEffect(() => {
       
       <div>
           <ModalComponent openModal={openModal} handleCancel={handleCancel} crypto={cryptoData} btnText="sell" />
-      </div></>
+      </div>
+    </>
     ))}
 
   </tbody>

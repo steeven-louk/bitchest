@@ -11,8 +11,12 @@ class client_wallets extends Model
 
     protected $fillable =[
         "user_id",
-        "cryptocurrency_id",
-        "quantity",
+        "name",
+        "logo",
+        "price",
+        "cotation",
+        "quantity"
+        
     ];
 
     public function user()

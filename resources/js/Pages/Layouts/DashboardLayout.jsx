@@ -2,15 +2,11 @@ import React, { useEffect, useState } from 'react'
 
 
 import { Card, Layout, Space, theme } from 'antd';
-import { Link, Outlet, Route, Routes } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import Cryptos from '../cryptocurrencies/Cryptos';
-import Home from '../Home';
-import Portfolio from '../portfolio/Portfolio';
-import Profile from '../user/Profile';
-import UserManagement from '../admin/UserManagement';
+
+import Sidebar from '../../Components/Sidebar';
 const { Header, Content, Sider } = Layout;
 
 const DashboardLayout = ({children}) => {
@@ -18,9 +14,7 @@ const DashboardLayout = ({children}) => {
   const username = useSelector((state)=> state.user?.userData?.name)
   const userEmail = useSelector((state)=>state.user?.userData?.email);
   const role = useSelector((state) => state.user?.userData?.status);
-  const tesss = useSelector((state) => state.user);
 
-console.table(tesss);
     const {
         token: { colorBgContainer },
       } = theme.useToken();
@@ -47,6 +41,7 @@ console.table(tesss);
 
     
      const handleLogout =()=>{
+      console.log('logout')
       try {
         Swal.fire({
           title: 'LOGOUT',
@@ -72,41 +67,9 @@ console.table(tesss);
 
      return (
         <Layout className=' overflow-hidden overflow-y-hidden'>
-         <Sider
+          <Sidebar role={role} wallets={wallets} handleLogout={handleLogout}/>
 
-           breakpoint="lg"
-           collapsedWidth="0"
-           onBreakpoint={(broken) => {
-             console.log(broken);
-           } }
-           onCollapse={(collapsed, type) => {
-             console.log(collapsed, type);
-           } }
-           className=' h-screen'
-         >
-           <Link to="/" className="logo">
-             <img src="assets/bitchest_logo.png" alt="logo" />
-           </Link>
-           <div className='align-middle justify-around flex flex-col h-[100%]'>
-             <ul className='text-white mx-auto gap-4 flex flex-col p-2'>
-               <li className="nav-item"><Link to="dashboard" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Dashboard</Link></li>               
-               {role === "user" && <li className="nav-item"><Link to="crypto-history" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">histories</Link></li>}
-               <li className="nav-item"><Link to="profile" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Profil</Link></li>
-               <li className="nav-item"><Link to="cryptocurrencies" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Cryptocurrencies</Link></li>
-               {role === "user" && <li className="nav-item"><Link to="portfolio" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Portfolio</Link></li>}
-               {role === "admin" && <li className="nav-item"><Link to="user-management" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Manage user</Link></li>}
-               {role === "user" && <li className="nav-item"><Link to="create-user" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Create user</Link></li>}
-             </ul>
-             <div className="btn-group flex flex-col">
-               {role === "user" && <span className='text-white text-xl shadow-green-500 shadow-sm text-center mb-3 font-bold uppercase'>solde : {wallets}$</span>}
-               <button onClick={handleLogout} className='uppercase text-md tracking-tight p-3 text-white font-semibold bg-green-500 hover:bg-red-500 transition hover:ease-in-out duration-300'>
-                 Logout
-               </button>
-             </div>
-           </div>
-         </Sider>
-
-         <Layout className=''>
+         <Layout>
            <Header>
              <h3 className='shadow capitalize text-white'>hello, {name}</h3>
            </Header>
@@ -120,7 +83,8 @@ console.table(tesss);
              
 
            </Content>
-       </Layout><Sider
+       </Layout>
+       <Sider
          style={{ height: '100vh' }}
          breakpoint="lg"
          collapsedWidth="0"

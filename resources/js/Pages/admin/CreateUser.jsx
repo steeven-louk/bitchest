@@ -46,13 +46,12 @@ const CreateUser = () => {
        } catch (error) {
         console.log(error)
        }
-        // post(route('register'));
     };
 
   return (
     <>
     <Head title="Create User" />
-        {/* //     <Head title="Register" /> */}
+            <Head title="Create User" />
         <ValidationErrors errors={errors} /><form onSubmit={submit}>
             <div>
                 <Label forInput="name" value="Name" />

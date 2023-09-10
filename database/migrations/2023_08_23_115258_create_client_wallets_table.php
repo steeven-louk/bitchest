@@ -15,9 +15,12 @@ class CreateClientWalletsTable extends Migration
     {
         Schema::create('client_wallets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('cryptocurrency_id')->constrained('cryptocurrencies');
+            $table->string('name');
+            $table->string('logo', 100)->nullable();
+            $table->decimal('price', 10, 2);
+            $table->float('cotation');
             $table->decimal('quantity', 10, 2);
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }

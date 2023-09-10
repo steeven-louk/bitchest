@@ -20,8 +20,8 @@ export const ModalComponent = ({openModal, btnText, handleCancel,crypto}, ) => {
   const [cotationOfToday,setCotationOfToday] = useState();
   
 
-  const cryptoName = crypto?.cryptocurrency?.name;
-  const cotation = crypto?.cryptocurrency?.cotation;
+  const cryptoName = crypto?.name;
+  const cotation = crypto?.cotation;
   const gain = cotation + cotationOfToday
 
 
@@ -73,6 +73,7 @@ export const ModalComponent = ({openModal, btnText, handleCancel,crypto}, ) => {
   return (
     <>
         <Modal
+            className='w-[50em]'
             open={openModal}
             title={cryptoName}
             onCancel={handleCancel}
