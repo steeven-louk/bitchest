@@ -1,15 +1,16 @@
 import { Button, Form, Modal, Input, Radio, Table, Space  } from 'antd'
-import { Header } from 'antd/es/layout/layout'
+// import { Header } from 'antd/es/layout/layout'
 import React, { useEffect, useState } from 'react'
 
-import { UserOutlined } from '@ant-design/icons';
+// import { UserOutlined } from '@ant-design/icons';
 
 
-import Title from 'antd/es/typography/Title';
+// import Title from 'antd/es/typography/Title';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
-import DashboardLayout from '../Layouts/DashboardLayout';
+// import DashboardLayout from '../Layouts/DashboardLayout';
+import { deleteUser, getUsers } from '../../services/ApiFunction';
 
 
 const UserManagement = () => {
@@ -22,21 +23,14 @@ const UserManagement = () => {
   const [role, setRole] = useState("");
 
 
-  const getUsers= async ()=>{
-    try {
-      const data = await axios.get("http://localhost:8000/api/admin/get-users");
-      if(data.status == 200) setGetUser(data.data);
-
-    } catch (error) {
-      console.log(error)
-    }
-   }
+  const dataSource = getUser
 
 
 
-useEffect(() => {
- getUsers();
-}, []);
+console.log(getUser)
+useEffect(async() => {
+ await getUsers(setGetUser);
+}, [setGetUser]);
 
 const showModal = (id) => {
   setOpenModal(true);
@@ -45,45 +39,19 @@ const showModal = (id) => {
 const handleCancel = () => {
   setOpenModal(false);
   setUserId(null);
-
 };
 
-const deleteUser = async(id,e)=>{
+const removeUser= async(id,e)=>{
   e.preventDefault();
-
-  try {
-
-    Swal.fire({
-  title: 'Are you sure?',
-  text: "You won't be able to revert this!",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes, delete it!'
-}).then(async(result) => {
-
-  if (result.isConfirmed) {
-    const data = await axios.delete("http://localhost:8000/api/admin/get-users/" + id);
-
-    if(data.status === 200){
-      console.log("datasupp", data);
-      Swal.fire(
-      'Deleted!',
-      'Your file has been deleted.',
-      'success'
-    )
-     await getUsers();
-    }
-   
-  }
-});
-
-
-  } catch (error) {
-    console.log(error)
-  }
+ try {
+  await deleteUser(id);
+//  await getUsers();
+ } catch (error) {
+  console.log(error)
+ }
 }
+
+
 
 const handleUpdate =async()=>{
 
@@ -138,7 +106,6 @@ const [form] = Form.useForm();
 
 
 
-      const dataSource = getUser
       
 const columns = [
   {
@@ -169,7 +136,7 @@ const columns = [
     render:(_, record) => (
         <Space size="middle" className='gap-3'>
           <a className='text-[#fff] bg-blue-700 p-2 rounded-md' onClick={()=>showModal(record.id)}>update </a>
-          <a className='text-[#fff] bg-red-700 p-2 rounded-md' onClick={(e)=>deleteUser(record.id, e)}>Delete</a>
+          <a className='text-[#fff] bg-red-700 p-2 rounded-md' onClick={(e)=>removeUser(record.id, e)}>Delete</a>
         </Space>
       )
   },
@@ -209,7 +176,7 @@ const columns = [
       </Form.Item>
       <Form.Item label="Status">
           <Radio.Group name='status'>
-            <Radio value="client" onChange={(e)=>setRole(e.target.value)} className='font-bold'> Client </Radio>
+            <Radio value="user" onChange={(e)=>setRole(e.target.value)} className='font-bold'> User </Radio>
             <Radio value="admin" onChange={(e)=>setRole(e.target.value)} className='font-bold'> Admin </Radio>
           </Radio.Group>
         </Form.Item>
@@ -226,37 +193,5 @@ const columns = [
 </>
   )
 }
-//       {/* <Header className='text-white'>
-//         <Title level={3} type='success' className=" uppercase font-semibold flex my-auto ">user management</Title> 
-//       </Header> */}
 
-//       {/* <Table columns={columns} dataSource={data} />; */}
-//       <table className="min-w-full">
-//   <thead>
-//     <tr>
-//       <th scope="col">#</th>
-//       <th scope="col" className='px-4 py-2'>Name</th>
-//       <th scope="col" className='px-4 py-2'>Email</th>
-//       <th scope="col" className='px-4 py-2'>Status</th>
-//       <th colSpan={3} className='px-4 py-2'>action</th>
-//     </tr>
-//   </thead>
-//   <tbody className="table-group-divider">
-//   {currentItems?.map((item)=>(
-//     <tr key={item.id} className=' align-baseline'>
-//       <th scope="row">{item.id}</th>
-//       <td className='border-2 px-4 py-2'>{item.name}</td>
-//       <td className='border-2 px-4 py-2'>{item.email}</td>
-//       <td className='border-2 px-4 py-2 text-center font-bold'>{item.status}</td>
-//       <td className='border-2 px-4 py-2 text-center font-bold'>
-//         <span onClick={()=>showModal(item.id)} className='text-[#fff] bg-blue-700 cursor-pointer mx-3 p-2 rounded-md'>update</span>
-//         <span className='text-[#fff] bg-red-700 cursor-pointer p-2 rounded-md' onClick={(e)=>deleteUser(item.id, e)}>delete</span>
-//       </td>
-//     </tr>
-//   ))}
-    
-//   </tbody>
-//   {/* Affichez la pagination */}
-//   {/* <Pagination/> */}
-// </table>
 export default UserManagement

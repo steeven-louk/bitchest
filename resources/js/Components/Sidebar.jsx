@@ -1,17 +1,19 @@
 import Sider from 'antd/es/layout/Sider';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
 
-// import Cryptos from '../cryptocurrencies/Cryptos';
-// import Home from '../Home';
-// import Portfolio from '../portfolio/Portfolio';
-// import Profile from '../user/Profile';
-// import UserManagement from '../admin/UserManagement';
 
 const Sidebar = ({role, wallets,handleLogout} ) => {
-  return (
-    <Sider
 
+  console.log('wallets',wallets)
+  useEffect(() => {
+   wallets
+  }, [wallets]);
+
+
+  return (
+
+    <Sider
     breakpoint="lg"
     collapsedWidth="0"
     onBreakpoint={(broken) => {
@@ -22,7 +24,7 @@ const Sidebar = ({role, wallets,handleLogout} ) => {
     } }
     className=' h-screen'
   >
-    <Link to="/" className="logo">
+    <Link to="/dashboard" className="logo">
       <img src="assets/bitchest_logo.png" alt="logo" />
     </Link>
     <div className='align-middle justify-around flex flex-col h-[100%]'>
@@ -33,7 +35,7 @@ const Sidebar = ({role, wallets,handleLogout} ) => {
         <li className="nav-item"><Link to="cryptocurrencies" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Cryptocurrencies</Link></li>
         {role === "user" && <li className="nav-item"><Link to="portfolio" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Portfolio</Link></li>}
         {role === "admin" && <li className="nav-item"><Link to="user-management" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Manage user</Link></li>}
-        {role === "user" && <li className="nav-item"><Link to="create-user" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Create user</Link></li>}
+        {role === "admin" && <li className="nav-item"><Link to="create-user" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Create user</Link></li>}
       </ul>
       <div className="btn-group flex flex-col">
         {role === "user" && <span className='text-white text-xl shadow-green-500 shadow-sm text-center mb-3 font-bold uppercase'>solde : {wallets}$</span>}

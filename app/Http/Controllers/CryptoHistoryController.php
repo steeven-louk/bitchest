@@ -8,23 +8,10 @@ use Illuminate\Http\Request;
 class CryptoHistoryController extends Controller
 {
     //
-    public function index()
+    public function index($user_id)
     {
-        $data = crypto_history::all();
-        // dd($data);
+        $data = crypto_history::where('user_id', $user_id)->get();
         return response()->json($data);
     }
 
-    // public function store()
-    // {
-    //     $details=[
-    //         'crypto_name' => $crypto_name,
-    //         'logo'=> $logo,
-    //         'price'=> $price,
-    //         'quantity'=> $quantity,
-    //         'cotation'=> $cotation,
-    //     ];
-
-    //     crypto_history::create($details);
-    // }
 }

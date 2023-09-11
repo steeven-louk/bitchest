@@ -14,7 +14,6 @@ class CotationServiceController extends Controller
     {
         try {
      
-        //    $data =CotationServices:: getFirstCotation($cotation);
            $data =CotationServices:: getCotationFor($cotation);
 
            return response()->json(["message"=>"la cotation est", $data]);

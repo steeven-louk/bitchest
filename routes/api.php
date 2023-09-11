@@ -36,6 +36,6 @@ Route::post('/buy-crypto/{user_id}', [CryptoCurrenciesController::class, "buyCry
 
 
 Route::get('/get-crypto/{cotation}', [CryptoCurrenciesController::class, "showCrypto"]);
-Route::get('/get-cryptoHistory', [CryptoHistoryController::class, "index"]);
+Route::get('/user/cryptoHistory/{user_id}', [CryptoHistoryController::class, "index"]);
 Route::get('/get-user/{email}', [AuthenticatedSessionController::class, "show"]);
 
