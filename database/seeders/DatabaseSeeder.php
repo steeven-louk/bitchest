@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory(30)->create();
         $this->call(CryptoCurrenciesSeeder::class);
         $this->call(ClientWalletsSeeder::class);
+        $this->call(CryptoHistorySeeder::class);
     }
 }

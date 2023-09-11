@@ -105,7 +105,6 @@ export const buyUserCrypto = async(item, user_id)=>{
   }
 
  export const sellUserCrypto = async(item, user_id)=>{
-    // const price = item.cotation * item.quantity;
 
     const data ={
       crypto_name: item.name,
