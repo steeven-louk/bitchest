@@ -14,12 +14,11 @@ use Illuminate\Support\Facades\Auth;
 
 class CryptoCurrenciesController extends Controller
 {
-    //
+    //recuperation de l'ensemble des cryptos
     public function index()
     {
        try {
         $crypto = cryptocurrencies::all();
-
         return response()->json($crypto, 200);
        } catch (Error $error) {
         throw $error;
@@ -27,23 +26,25 @@ class CryptoCurrenciesController extends Controller
        }
     }
 
-
+    //fonction de vente de crypto
     public function sellCrypto(Request $request,$user_id, $id)
     {
         try {
-            $user = User::where('id',$user_id)->first();
+            $user = User::where('id',$user_id)->first(); //recuperation du client connecté
             
-            if(!$user) return response()->json("user not found", 404);
-            // $crypto_id = $request->input('id');
+            if(!$user) return response()->json("user not found", 404); //renvoi une 404 si l'utilisateur est introuvable
+           
+           //recuperation des données du champs 
             $crypto_name = $request->input('crypto_name');
             $logo = $request->input('logo');
             $price = $request->input('price');
             $quantity = $request->input('quantity');
             $cotation = $request->input('cotation');
 
-            $user-> solde += $price;
+            $user-> solde += $price; //incrementer le solde de l'utilisateur
             $user->save();
 
+            //sauvegarde de la crypto dans la table history
             $cryptoHistory = new crypto_history();
             $cryptoHistory -> crypto_name = $crypto_name;
             $cryptoHistory -> logo = $logo;
@@ -55,9 +56,8 @@ class CryptoCurrenciesController extends Controller
             $cryptoHistory -> timestamp = now();
             
             $cryptoHistory -> save();
-          
 
-
+            // recuperation d'une crypto donnée et la supprimée
             $getCrypto = client_wallets::findOrFail($id);
            if($getCrypto)  {$getCrypto->delete();}
 
@@ -83,12 +83,13 @@ class CryptoCurrenciesController extends Controller
                 $quantity = $request->input('quantity');
                 $cotation = $request->input('cotation');
     
-                // Sufficient balance, deduct the cost
+                // Verifier si le solde est suffisant
                 if($user->solde < $price) return response()->json('insufficient balance', 200);
-                $user->solde -= $price;
+                $user->solde -= $price; //decrementer le solde de l'utilisateur
                 $user->save();
 
 
+                //enregistrement de la crypto dans le portfeuille
                 $addInWallet = new client_wallets();
                 $addInWallet -> user_id = $user_id;
                 $addInWallet -> name = $crypto_name;
@@ -99,6 +100,7 @@ class CryptoCurrenciesController extends Controller
                 $addInWallet -> save();
 
     
+                //sauvegarde de la crypto dans la table history
                 $cryptoHistory = new crypto_history();
                 $cryptoHistory -> crypto_name = $crypto_name;
                 $cryptoHistory -> logo = $logo;
@@ -113,8 +115,6 @@ class CryptoCurrenciesController extends Controller
              
             }
 
-     
-    
         } catch (\Exception $e) {
         return response()->json(['message' => 'Error buying crypto', 'error' => $e->getMessage()], 500);
     }

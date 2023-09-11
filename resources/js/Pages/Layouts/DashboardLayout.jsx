@@ -23,7 +23,6 @@ const DashboardLayout = ({ children }) => {
     }, []);
 
     const handleLogout = () => {
-        console.log("logout");
         try {
             Swal.fire({
                 title: "LOGOUT",

@@ -22,12 +22,12 @@ class AdminController extends Controller
     {
         try {
             
-        $data = User::orderBy("id", "ASC")->get();
-        return response()->json( $data,200);
-        } catch (Error $error) {
-            throw $error;
-            response()->json(["message"=>"impossible de recuperer les user"], 404);
-        }
+            $data = User::orderBy("id", "ASC")->get(); //recuperation de la liste des utilisateur
+            return response()->json( $data,200);
+            } catch (Error $error) {
+                throw $error;
+                response()->json(["message"=>"impossible de recuperer les user"], 404);
+            }
     }
 
     /**
@@ -54,7 +54,7 @@ class AdminController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-
+        //ajout d'un utilisateur
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -102,13 +102,13 @@ class AdminController extends Controller
             'status'=>'required'
         ]);
         try {
-            $user = User::findOrFail($get_user);
-            if(!$user) return response()->json(['message'=>"user not found"], 404);
+            $user = User::findOrFail($get_user); //recuperation d'un utilisateur
+            if(!$user) return response()->json(['message'=>"user not found"], 404); //on verifie si l'utilisateur existe
 
             $user->name = $request->input('name');
             $user->email = $request->input('email');
             $user->status = $request->input('status');
-            $user->save();
+            $user->save(); //on met à jour l'utilisateur
 
             return response()->json(['message' => 'user has been updated successfully']);
     
@@ -125,7 +125,7 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //suppression d'un utilisateur
         $data = User::findOrFail($id);
         $data -> delete();
         return response()->json(["message"=>"user deleted successfully", $data]);

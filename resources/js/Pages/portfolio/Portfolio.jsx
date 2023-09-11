@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 
-import axios from "axios";
 import { ModalComponent } from "../../Components/Modal/Modal";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { toast } from "react-toastify";
 import { getUserWallets, sellUserCrypto } from "../../services/ApiFunction";
+import { Space, Table } from "antd";
 
 const Portfolio = () => {
-    const [userWallet, setUserWallet] = useState([null]);
+    const [userWallet, setUserWallet] = useState();
     const [cryptoData, setCryptoData] = useState();
     const [openModal, setOpenModal] = useState(false);
-    console.log("userWallet", userWallet);
-    const user_id = useSelector((state) => state.user?.userData?.id);
+
+    const user_id = useSelector((state) => state?.user?.userData?.id);
+
+    const dataSource = userWallet;
 
     const showModal = (item) => {
         setOpenModal(true);
@@ -32,66 +33,73 @@ const Portfolio = () => {
         await getUserWallets(setUserWallet, user_id);
     }, [user_id, setUserWallet]);
 
+    const columns = [
+        {
+            title: "id",
+            dataIndex: "id",
+            rowScope: "row",
+        },
+        {
+            title: "Name",
+            dataIndex: "name",
+            key: "name",
+            render: (_, record) => (
+                <div className="flex gap-2">
+                    <img
+                        src={`assets/${record?.logo}.png`}
+                        alt={record?.name}
+                    />
+                    <span>{record?.name}</span>
+                </div>
+            ),
+        },
+        {
+            title: "Cotation",
+            dataIndex: "cotation",
+            key: "cotation",
+        },
+        {
+            title: "Quantity",
+            dataIndex: "quantity",
+            key: "quantity",
+        },
+        {
+            title: "Action",
+            dataIndex: "",
+            key: "x",
+
+            render: (_, record) => (
+                <Space size="middle" className="gap-3">
+                    <a
+                        className="text-white bg-green-800 rounded-md font-semibold p-2 cursor-pointer"
+                        onClick={() => sellCrypto(record)}
+                    >
+                        sell
+                    </a>
+                    <a
+                        className="text-white bg-blue-800 rounded-md font-semibold p-2 cursor-pointer"
+                        onClick={() => showModal(record)}
+                    >
+                        view
+                    </a>
+                </Space>
+            ),
+        },
+    ];
+
     return (
         <>
-            <table className="table w-[100%] hover:border-collapse">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>name</th>
-                        <th>price</th>
-                        <th>cotation</th>
-                        <th>quantity</th>
-                        <th>action</th>
-                    </tr>
-                </thead>
-                <tbody className="text-center">
-                    {userWallet?.map((item, index) => (
-                        <>
-                            <tr key={item?.id}>
-                                <td>{index + 1}</td>
-                                <td className=" align-baseline inline-flex gap-3">
-                                    <img
-                                        src={`assets/${item?.logo}.png`}
-                                        alt={`logo ${item?.name}`}
-                                    />{" "}
-                                    {item?.name}
-                                </td>
-                                <td className="capitalize">{item?.price} €</td>
-                                <td className="capitalize">
-                                    {item?.cotation}
-                                </td>
-                                <td className="font-semibold">
-                                    {item?.quantity}
-                                </td>
-                                <td className="flex gap-3 text-center">
-                                    <span
-                                        onClick={() => sellCrypto(item)}
-                                        className="text-white bg-green-800 rounded-md font-semibold p-2 cursor-pointer"
-                                    >
-                                        sell
-                                    </span>
-                                    <span
-                                        onClick={() => showModal(item)}
-                                        className="text-white bg-blue-800 rounded-md font-semibold p-2 cursor-pointer"
-                                    >
-                                        view
-                                    </span>
-                                </td>
-                            </tr>
-
-                            <div>
-                                <ModalComponent
-                                    openModal={openModal}
-                                    handleCancel={handleCancel}
-                                    crypto={cryptoData}
-                                    btnText="sell"
-                                />
-                            </div>
-                        </>
-                    ))}
-                </tbody>
-            </table>
+            <Table
+                rowKey={(record) => record.id}
+                dataSource={dataSource}
+                columns={columns}
+            />
+            <ModalComponent
+                openModal={openModal}
+                handleCancel={handleCancel}
+                crypto={cryptoData}
+                btnText="sell"
+            />
         </>
     );
 };

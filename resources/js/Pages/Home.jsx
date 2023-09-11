@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Card, Space } from "antd";
-import axios from "axios";
+import { Card } from "antd";
 import CryptoChart from "../Components/CryptoCharts/CryptoChart";
 import { getCrypto } from "../services/ApiFunction";
 
@@ -40,6 +39,8 @@ const Home = () => {
                     <CryptoChart data={crypto} />
                 </Card>
             </article>
+
+            
         </>
     );
 };

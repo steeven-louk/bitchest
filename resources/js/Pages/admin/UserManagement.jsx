@@ -45,14 +45,13 @@ const removeUser= async(id,e)=>{
   e.preventDefault();
  try {
   await deleteUser(id);
-//  await getUsers();
  } catch (error) {
   console.log(error)
  }
 }
 
 
-
+// function de mise à jout d'un user
 const handleUpdate =async()=>{
 
   try {
@@ -188,7 +187,7 @@ const columns = [
 </Modal>
 
 
-<Table rowKey={(record)=> record.id} dataSource={dataSource} columns={columns} />
+<Table rowKey={(record)=> record?.id} dataSource={dataSource} columns={columns} />
 
 </>
   )

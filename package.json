@@ -29,7 +29,9 @@
     "dependencies": {
         "@reduxjs/toolkit": "^1.9.5",
         "antd": "^5.8.3",
+        "apexcharts": "^3.42.0",
         "chart.js": "^4.3.3",
+        "react-apexcharts": "^1.4.1",
         "react-chartjs-2": "^5.2.0",
         "react-redux": "^8.1.2",
         "react-router-dom": "^6.15.0",

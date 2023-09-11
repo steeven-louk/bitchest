@@ -1,6 +1,5 @@
 import { getHistory } from "../../services/ApiFunction";
 import { Table } from "antd";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -28,6 +27,9 @@ const CryptoHistory = () => {
             title: "Price",
             dataIndex: "price",
             key: "price",
+            render: (_, record) => (
+                <span>{record?.price} €</span>
+            ),
         },
         {
             title: "Quantity",

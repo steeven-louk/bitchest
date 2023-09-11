@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\Auth;
 
 class ClientWalletsController extends Controller
 {
-    //
     public function index($user_id)
     {
         try {
+            //recuperation du portfeuille d'un client specifique
             $wallets = client_wallets::where("user_id", $user_id)->get();
             return response()->json($wallets,200);
         } catch (Error $error) {
-           return response()->json($error);
+           return response()->json($error, 500);
         }
 
        

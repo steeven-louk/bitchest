@@ -11,6 +11,7 @@ import {
 } from 'chart.js/auto';
 import { useSelector } from 'react-redux';
 import { buyUserCrypto, sellUserCrypto } from '../../services/ApiFunction';
+import ReactApexChart from 'react-apexcharts';
 
 ChartJS.register(LineElement,LinearScale,PointElement
 , CategoryScale)
@@ -21,15 +22,14 @@ export const ModalComponent = ({openModal, btnText, handleCancel,crypto}, ) => {
   const [gainMessage, setGainMessage] = useState('');
   const [cotationOfToday,setCotationOfToday] = useState();
   const user_id = useSelector((state)=> state.user?.userData?.id)
-  const role = useSelector((state)=> state.user?.userData?.status)
+  // const role = useSelector((state)=> state.user?.userData?.status)
   
 
   const cryptoName = crypto?.name;
   const cotation = crypto?.cotation;
   const gain = cotation + cotationOfToday
-  // console.log('crypto, crypto1', crypto?.price)
-  // console.log('crypto, crypto2', parseFloat(crypto?.price) + 1720)
-
+  
+  
   const getCotationFor = async()=>{
    try {
     const data = await axios.get("http://localhost:8000/api/get-crypto/" + cryptoName);
@@ -40,6 +40,7 @@ export const ModalComponent = ({openModal, btnText, handleCancel,crypto}, ) => {
    }
   }
 
+  //function d'achat de crypto
   const buyOrSellCrypto = async()=>{
     try {
       let cotationPrice = gain * crypto.quantity;
@@ -77,10 +78,10 @@ export const ModalComponent = ({openModal, btnText, handleCancel,crypto}, ) => {
 
     }
   },[gain]);
-  const filteredData = CryptoCotation?.data?.response?.filter(item => item?.cotation >= 0);
-  const getCotation = filteredData.map((item)=>item.cotation )
+  
+  const filteredData = CryptoCotation?.data?.response?.filter(item => item?.cotation >= 0); //recuperer que les valeurs positive
+  const getCotation = filteredData?.map((item)=>item.cotation )
   const labels = CryptoCotation?.data?.response?.map((item)=>item.date);
-
 
   const chartData = {
         labels: labels,
@@ -100,6 +101,7 @@ export const ModalComponent = ({openModal, btnText, handleCancel,crypto}, ) => {
       
     };
 
+ 
   return (
     <>
         <Modal
@@ -118,7 +120,6 @@ export const ModalComponent = ({openModal, btnText, handleCancel,crypto}, ) => {
           >
          
             <Line data={chartData} />
-
             <h2> {gainMessage} </h2>
           </Modal>
     </>
