@@ -38,7 +38,7 @@ const Sidebar = ({role, wallets,handleLogout} ) => {
         {role === "admin" && <li className="nav-item"><Link to="create-user" className="nav-link text-xl sm:text-md hover:text-green-400 selection:text-white font-semibold">Create user</Link></li>}
       </ul>
       <div className="btn-group flex flex-col">
-        {role === "user" && <span className='text-white text-xl shadow-green-500 shadow-sm text-center mb-3 font-bold uppercase'>solde : {wallets}$</span>}
+        {role === "user" && <span className='text-white text-xl shadow-green-500 shadow-sm text-center mb-3 font-bold uppercase'>solde : {wallets}€</span>}
         <button onClick={()=>handleLogout()} className='uppercase text-md tracking-tight p-3 text-white font-semibold bg-green-500 hover:bg-red-500 transition hover:ease-in-out duration-300'>
           Logout
         </button>

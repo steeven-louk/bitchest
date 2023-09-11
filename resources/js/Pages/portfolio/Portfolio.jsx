@@ -57,9 +57,9 @@ const Portfolio = () => {
                                     />{" "}
                                     {item?.name}
                                 </td>
-                                <td className="capitalize">{item?.price} $</td>
+                                <td className="capitalize">{item?.price} €</td>
                                 <td className="capitalize">
-                                    {item?.cotation} $
+                                    {item?.cotation}
                                 </td>
                                 <td className="font-semibold">
                                     {item?.quantity}

@@ -77,8 +77,8 @@ export const ModalComponent = ({openModal, btnText, handleCancel,crypto}, ) => {
 
     }
   },[gain]);
-
-  const getCotation = CryptoCotation?.data?.response?.map((item)=>item.cotation )
+  const filteredData = CryptoCotation?.data?.response?.filter(item => item?.cotation >= 0);
+  const getCotation = filteredData.map((item)=>item.cotation )
   const labels = CryptoCotation?.data?.response?.map((item)=>item.date);
 
 
