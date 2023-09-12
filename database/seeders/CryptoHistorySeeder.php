@@ -40,7 +40,7 @@ class CryptoHistorySeeder extends Seeder
                     'logo' => $crypto['logo'], // Utilisez le nom de la crypto comme nom de logo
                     'price' => $faker->randomFloat(2, 10, 1000),
                     'quantity' => $faker->randomFloat(2, 0.01, 100),
-                    'transaction_type' => $faker->randomElement(['Achat', 'Vente']),
+                    'transaction_type' => $faker->randomElement(['Buy', 'Sell']),
                     'cotation' => $faker->randomFloat(2, 1, 500),
                     'user_id' => $faker->numberBetween(1, 10),
                     'timestamp' => $faker->dateTimeThisDecade($max = 'now', $timezone = null),
